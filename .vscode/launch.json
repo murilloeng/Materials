@@ -1,0 +1,68 @@
+{
+	"version": "0.2.0",
+	"configurations":
+	[
+		{
+			"args": [],
+			"MIMode": "gdb",
+			"type": "cppdbg",
+			"environment": [],
+			"request": "launch",
+			"stopAtEntry": false,
+			"name": "gdb - debug",
+			"externalConsole": false,
+			"cwd": "${workspaceFolder}",
+			"program": "${workspaceFolder}/Test/dist/debug/test.out",
+			"setupCommands":
+			[
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			]
+		},
+		{
+			"args": [],
+			"MIMode": "gdb",
+			"type": "cppdbg",
+			"environment": [],
+			"request": "launch",
+			"stopAtEntry": false,
+			"name": "gdb - release",
+			"externalConsole": false,
+			"cwd": "${workspaceFolder}",
+			"program": "${workspaceFolder}/Test/dist/release/test.out",
+			"setupCommands":
+			[
+				{
+					"description": "Enable pretty-printing for gdb",
+					"text": "-enable-pretty-printing",
+					"ignoreFailures": true
+				}
+			]
+		},
+		{
+			"args": [],
+			"environment": [],
+			"type": "cppvsdbg",
+			"request": "launch",
+			"stopAtEntry": false,
+			"name": "msvc - debug",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"program": "${workspaceFolder}/Test/dist/x64/Debug/Test.exe"
+		},
+		{
+			"args": [],
+			"environment": [],
+			"type": "cppvsdbg",
+			"request": "launch",
+			"stopAtEntry": false,
+			"name": "msvc - release",
+			"cwd": "${workspaceFolder}",
+			"console": "integratedTerminal",
+			"program": "${workspaceFolder}/Test/dist/x64/Release/Test.exe"
+		}
+	]
+}
