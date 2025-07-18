@@ -24,10 +24,6 @@ namespace materials
 		virtual void load(FILE*);
 		virtual void save(FILE*) const;
 
-		//create
-		static Material* create(Material*&, const Material*);
-		static Material* create(Material*&, materials::type, const Material* = nullptr);
-
 	public:
 		//data
 		const char* label(void) const;

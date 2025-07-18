@@ -34,29 +34,6 @@ namespace materials
 		fprintf(file, "%s %+.6e ", m_label, m_specific_mass);
 	}
 
-	//create
-	Material* Material::create(Material*& material, const Material* base)
-	{
-		return Material::create(material, base->type(), base);
-	}
-	Material* Material::create(Material*& material, materials::type type, const Material* base)
-	{
-		//delete
-		delete material;
-		//create
-		switch(type)
-		{
-		case materials::type::heat: return nullptr;
-			 	/*return material = base ? new Heat(*(Heat*) base) : new Heat;*/
-			 case materials::type::steel: return nullptr;
-			 	/*return material = base ? new Steel(*(Steel*) base) : new Steel;*/
-			 case materials::type::concrete: return nullptr;
-			 	/*return material = base ? new Concrete(*(Concrete*) base) : new Concrete;*/
-			 default:
-			 	return material = nullptr;
-		}
-	}
-
 	//data
 	const char* Material::label(void) const
 	{
