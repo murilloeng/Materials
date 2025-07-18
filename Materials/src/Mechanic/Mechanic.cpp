@@ -294,20 +294,19 @@ namespace materials
 		const uint32_t nt = 100000;
 		const void* args[] = { &st, this };
 		const uint32_t ns = math::bit_count(st);
-		math::matrix s(ns, 1), Ha(ns, ns), Hn(ns, ns), Hr(ns, ns);
+		math::matrix s(ns, 1), Ha(ns, ns), Hn(ns, ns);
 		//test
 		srand(uint32_t(time(nullptr)));
 		for(uint32_t i = 0; i < nt; i++)
 		{
 			s.randu();
 			yield_hessian(Ha.data(), s.data(), st);
-			math::ndiff(fun_yield_gradient, Hn.data(), s.data(), args, 1, ns, 1e-7);
-			Hr = Ha - Hn;
-			if(Hr.norm() > 1e-5)
+			math::ndiff(fun_yield_gradient, Hn.data(), s.data(), args, ns, ns, 1e-7);
+			if((Ha - Hn).norm() > 1e-5 * Ha.norm())
 			{
 				Ha.print("Ha");
 				Hn.print("Hn");
-				Hr.print("Hr", 1e-5);
+				(Ha - Hn).print("Hr", 1e-5);
 				printf("Yield hessian numerical test failed!\n");
 				break;
 			}
