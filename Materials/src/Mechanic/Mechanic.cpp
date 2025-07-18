@@ -13,7 +13,7 @@
 #include "Materials/Materials/inc/Mechanic/Mechanic.hpp"
 
 //static
-static double test_stress(double v, const void** args)
+static double fun_stress(double v, const void** args)
 {
 	//data
 	const uint32_t st = *(uint32_t*) args[0];
@@ -23,7 +23,7 @@ static double test_stress(double v, const void** args)
 	const math::vector sm = v * um;
 	return material->yield_function(sm.data(), st) - material->plastic_stress(0);
 }
-static void test_function(double* f, const double* s, const void** args)
+static void fun_yield_function(double* f, const double* s, const void** args)
 {
 	//data
 	const uint32_t st = *(uint32_t*) args[0];
@@ -31,13 +31,20 @@ static void test_function(double* f, const double* s, const void** args)
 	//yield function
 	f[0] = material->yield_function(s, st);
 }
-static void test_gradient(double* df, const double* s, const void** args)
+static void fun_yield_gradient(double* df, const double* s, const void** args)
 {
 	//data
 	const uint32_t st = *(uint32_t*) args[0];
 	const materials::Mechanic* material = (materials::Mechanic*) args[1];
 	//yield function
 	material->yield_gradient(df, s, st);
+}
+static void fun_plastic_stress(double* sy, const double* p, const void** args)
+{
+	//data
+	const materials::Mechanic* material = (materials::Mechanic*) args[0];
+	//plastic stress
+	sy[0] = material->plastic_stress(p[0]);
 }
 
 namespace materials
@@ -191,39 +198,6 @@ namespace materials
 	}
 
 	//yield surface
-	void Mechanic::yield_test(uint32_t st, uint32_t nt) const
-	{
-		//size
-		const uint32_t ns = math::bit_count(st);
-		//data
-		const void* args[] = {&st, this};
-		const double sy = plastic_stress(0);
-		math::vector s(ns), dfa(ns), dfn(ns);
-		math::matrix d2fa(ns, ns), d2fn(ns, ns);
-		//test
-		srand(uint32_t(time(nullptr)));
-		for(uint32_t i = 0; i < nt; i++)
-		{
-			s.randu(-sy, sy);
-			yield_gradient(dfa.data(), s.data(), st);
-			yield_hessian(d2fa.data(), s.data(), st);
-			math::ndiff(test_function, dfn.data(), s.data(), args, 1, ns, 1e-5 * sy);
-			math::ndiff(test_gradient, d2fn.data(), s.data(), args, ns, ns, 1e-5 * sy);
-			if((dfa - dfn).norm() > 1e-5 * dfa.norm())
-			{
-				printf("yield gradient divergence:\n");
-				(dfa - dfn).print("dfr:", 1e-5 * dfa.norm());
-				break;
-			}
-			if((d2fa - d2fn).norm() > 1e-5 * d2fa.norm())
-			{
-				printf("yield hessian divergence:\n");
-				(d2fa - d2fn).print("d2fr:", 1e-5 * d2fa.norm());
-				break;
-			}
-			printf("test %d ok\n", i);
-		}
-	}
 	double Mechanic::yield_stress(const double* u, uint32_t st) const
 	{
 		//data
@@ -235,16 +209,16 @@ namespace materials
 		math::bisection solver;
 		solver.m_x1 = solver.m_x2 = sy;
 		solver.m_tolerance = 1e-5 * sy;
-		solver.m_system_2 = test_stress;
+		solver.m_system_2 = fun_stress;
 		const void* args[] = {&st, &um, this};
 		//setup
 		while(true)
 		{
-			if(test_stress(solver.m_x1, args) > 0) solver.m_x1 /= 2; else break;
+			if(fun_stress(solver.m_x1, args) > 0) solver.m_x1 /= 2; else break;
 		}
 		while(true)
 		{
-			if(test_stress(solver.m_x2, args) < 0) solver.m_x2 *= 2; else break;
+			if(fun_stress(solver.m_x2, args) < 0) solver.m_x2 *= 2; else break;
 		}
 		//solve
 		if(!solver.solve(args))
@@ -311,6 +285,90 @@ namespace materials
 	void Mechanic::return_mapping(double* s, double* C, const double* e, Point& mp) const
 	{
 		if(!broken(s, C, e, mp) && !predictor(s, C, e, mp)) corrector(s, C, e, mp);
+	}
+
+	//test
+	void Mechanic::test_yield_hessian(uint32_t st) const
+	{
+		//data
+		const uint32_t nt = 100000;
+		const void* args[] = { &st, this };
+		const uint32_t ns = math::bit_count(st);
+		math::matrix s(ns, 1), Ha(ns, ns), Hn(ns, ns), Hr(ns, ns);
+		//test
+		srand(uint32_t(time(nullptr)));
+		for(uint32_t i = 0; i < nt; i++)
+		{
+			s.randu();
+			yield_hessian(Ha.data(), s.data(), st);
+			math::ndiff(fun_yield_gradient, Hn.data(), s.data(), args, 1, ns, 1e-7);
+			Hr = Ha - Hn;
+			if(Hr.norm() > 1e-5)
+			{
+				Ha.print("Ha");
+				Hn.print("Hn");
+				Hr.print("Hr", 1e-5);
+				printf("Yield hessian numerical test failed!\n");
+				break;
+			}
+			else
+			{
+				printf("Yield hessian test: %d ok!\n", i);
+			}
+		}
+	}
+	void Mechanic::test_yield_gradient(uint32_t st) const
+	{
+		//data
+		const uint32_t nt = 100000;
+		const void* args[] = { &st, this };
+		const uint32_t ns = math::bit_count(st);
+		math::vector s(ns), ga(ns), gn(ns), gr(ns);
+		//test
+		srand(uint32_t(time(nullptr)));
+		for(uint32_t i = 0; i < nt; i++)
+		{
+			s.randu();
+			yield_gradient(ga.data(), s.data(), st);
+			math::ndiff(fun_yield_function, gn.data(), s.data(), args, 1, ns, 1e-7);
+			gr = ga - gn;
+			if(gr.norm() > 1e-5)
+			{
+				ga.print("ga");
+				gn.print("gn");
+				gr.print("gr", 1e-5);
+				printf("Yield gradient numerical test failed!\n");
+				break;
+			}
+			else
+			{
+				printf("Yield gradient test: %d ok!\n", i);
+			}
+		}
+	}
+	void Mechanic::test_plastic_gradient(void) const
+	{
+		//data
+		double p, kpa, kpn;
+		const uint32_t nt = 100000;
+		const void* args[] = { this };
+		//test
+		srand(uint32_t(time(nullptr)));
+		for(uint32_t i = 0; i < nt; i++)
+		{
+			p = rand() / RAND_MAX;
+			kpa = plastic_gradient(p);
+			math::ndiff(fun_plastic_stress, &kpn, &p, args, 1, 1, 1e-5);
+			if(fabs(kpa - kpn) > 1e-5)
+			{
+				printf("Plastic gradient numerical test failed!\n");
+				break;
+			}
+			else
+			{
+				printf("Plastic gradient test: %d ok!\n", i);
+			}
+		}
 	}
 
 	//return mapping

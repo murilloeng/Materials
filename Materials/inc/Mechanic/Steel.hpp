@@ -7,7 +7,7 @@ namespace materials
 {
 	class Steel : public Mechanic
 	{
-	protected:
+	public:
 		//constructors
 		Steel(void);
 
@@ -18,7 +18,6 @@ namespace materials
 		void load(FILE*) override;
 		void save(FILE*) const override;
 
-	public:
 		//type
 		materials::type type(void) const;
 

@@ -52,7 +52,7 @@ $(out_lib) : $(obj_lib)
 
 $(out_exe) : $(obj_exe)
 	@mkdir -p $(dir $@)
-	@g++ -o $(out_exe) $(obj_exe) Materials/dist/$(mode)/libmaterials.so $(LIBS)
+	@g++ -o $(out_exe) $(obj_exe) Materials/dist/$(mode)/libmaterials.so  ../Math/Math/dist/$(mode)/libmath.so $(LIBS)
 	@echo 'executable - $(mode): $@'
 
 Materials/build/$(mode)/%.o : Materials/src/%.cpp Materials/build/$(mode)/%.d

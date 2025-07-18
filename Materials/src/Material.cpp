@@ -52,8 +52,6 @@ namespace materials
 			 	/*return material = base ? new Steel(*(Steel*) base) : new Steel;*/
 			 case materials::type::concrete: return nullptr;
 			 	/*return material = base ? new Concrete(*(Concrete*) base) : new Concrete;*/
-			 case materials::type::hyperelastic: return nullptr;
-			 	/*return material = base ? new Hyperelastic2(*(Hyperelastic2*) base) : new Hyperelastic2;*/
 			 default:
 			 	return material = nullptr;
 		}
@@ -93,8 +91,6 @@ namespace materials
 				return "Steel";
 			case materials::type::concrete:
 				return "Concrete";
-			case materials::type::hyperelastic:
-				return "Hyperelastic";
 			default:
 				return "";
 		}

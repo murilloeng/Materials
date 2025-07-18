@@ -47,7 +47,6 @@ namespace materials
 		virtual double plastic_gradient(double) const = 0;
 
 		//yield surface
-		void yield_test(uint32_t, uint32_t) const;
 		double yield_stress(const double*, uint32_t) const;
 
 		//yield surface
@@ -59,6 +58,11 @@ namespace materials
 		void stress(double*, const double*, const Point&) const;
 		void stiffness(double*, const double*, const Point&) const;
 		void return_mapping(double*, double*, const double*, Point&) const;
+
+		//test
+		void test_plastic_gradient(void) const;
+		void test_yield_hessian(uint32_t) const;
+		void test_yield_gradient(uint32_t) const;
 
 	protected:
 		//return mapping
