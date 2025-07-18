@@ -9,9 +9,9 @@
 int main(void)
 {
 	//data
-	const bool steel = false;
+	const bool steel = true;
 	const bool stress = false;
-	const bool concrete = true;
+	const bool concrete = false;
 	const uint32_t st = materials::Stress::beam3D;
 	const materials::Concrete::Model model = materials::Concrete::Model::bresler_pister;
 	//test
@@ -32,9 +32,10 @@ int main(void)
 	}
 	if(steel)
 	{
-		tests::steel::test_yield_hessian(st);
-		tests::steel::test_yield_gradient(st);
-		tests::steel::test_plastic_gradient();
+		tests::steel::test_uniaxial();
+		// tests::steel::test_yield_hessian(st);
+		// tests::steel::test_yield_gradient(st);
+		// tests::steel::test_plastic_gradient();
 	}
 	if(concrete)
 	{
