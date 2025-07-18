@@ -8,7 +8,7 @@
 //materials
 #include "Materials/Materials/inc/Types.hpp"
 #include "Materials/Materials/inc/Mechanic/Steel.hpp"
-#include "Materials/Materials/inc/Mechanic/stress.hpp"
+#include "Materials/Materials/inc/Mechanic/Stress.hpp"
 
 namespace materials
 {
@@ -105,14 +105,14 @@ namespace materials
 	//yield criterion
 	double Steel::yield_function(const double* s, uint32_t st) const
 	{
-		return von_mises_stress(s, st);
+		return Stress(s, st).von_mises_stress();
 	}
-	void Steel::yield_gradient(double* dfs, const double* s, uint32_t st) const
+	void Steel::yield_gradient(double* df, const double* s, uint32_t st) const
 	{
-		von_mises_gradient(dfs, s, st);
+		Stress(s, st).von_mises_gradient(df);
 	}
-	void Steel::yield_hessian(double* dfss, const double* s, uint32_t st) const
+	void Steel::yield_hessian(double* ddf, const double* s, uint32_t st) const
 	{
-		von_mises_hessian(dfss, s, st);
+		Stress(s, st).von_mises_hessian(ddf);
 	}
 }

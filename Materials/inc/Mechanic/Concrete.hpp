@@ -8,6 +8,13 @@ namespace materials
 	class Concrete : public Mechanic
 	{
 	public:
+		//type
+		enum class Model : uint32_t
+		{
+			drucker_prager,
+			bresler_pister
+		};
+
 		//constructors
 		Concrete(void);
 
@@ -22,6 +29,9 @@ namespace materials
 		materials::type type(void) const override;
 
 		//data
+		Model model(Model);
+		Model model(void) const;
+
 		double poisson_ratio(void) const override;
 
 		double elastic_modulus(double);
@@ -46,8 +56,10 @@ namespace materials
 
 	protected:
 		//data
+		Model m_model;
 		double m_elastic_modulus;
 		double m_yield_stress_tension;
+		double m_yield_stress_biaxial;
 		double m_yield_stress_compression;
 
 		//friends

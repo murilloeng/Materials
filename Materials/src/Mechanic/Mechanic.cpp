@@ -8,7 +8,7 @@
 #include "Math/Math/inc/solvers/bisection.hpp"
 
 //materials
-#include "Materials/Materials/inc/Mechanic/stress.hpp"
+#include "Materials/Materials/inc/Mechanic/Stress.hpp"
 #include "Materials/Materials/inc/Mechanic/States.hpp"
 #include "Materials/Materials/inc/Mechanic/Mechanic.hpp"
 
@@ -194,7 +194,7 @@ namespace materials
 		Dc[1 + 6 * 0] = Dc[0 + 6 * 1] = -v;
 		Dc[2 + 6 * 0] = Dc[0 + 6 * 2] = -v;
 		Dc[2 + 6 * 1] = Dc[1 + 6 * 2] = -v;
-		return stress_matrix(D, Dc, st, E);
+		return Stress(nullptr, st).filter_matrix(D, Dc, E);
 	}
 
 	//yield surface
@@ -302,8 +302,9 @@ namespace materials
 			s.randu();
 			yield_hessian(Ha.data(), s.data(), st);
 			math::ndiff(fun_yield_gradient, Hn.data(), s.data(), args, ns, ns, 1e-7);
-			if((Ha - Hn).norm() > 1e-5 * Ha.norm())
+			if((Ha - Hn).norm() > 1e-5 * (Ha.norm() ? Ha.norm() : 1))
 			{
+				s.print();
 				Ha.print("Ha");
 				Hn.print("Hn");
 				(Ha - Hn).print("Hr", 1e-5);

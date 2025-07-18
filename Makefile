@@ -36,14 +36,14 @@ all : exe
 run : exe
 	./$(out_exe)
 
-debug : exe
-	gdb ./$(out_exe)
-
-lib : $(out_lib)
+lib : math $(out_lib)
 	@echo 'library build - $(mode): complete!'
 
 exe : lib $(out_exe)
 	@echo 'executable build - $(mode): complete!'
+
+math : 
+	@cd ../Math && make -f Makefile m=$m lib
 
 $(out_lib) : $(obj_lib)
 	@mkdir -p $(dir $@)
