@@ -15,7 +15,8 @@ namespace materials
 	//constructors
 	Concrete::Concrete(void) :
 		m_model(Model::drucker_prager), m_elastic_modulus(2.61e+10), 
-		m_yield_stress_tension(3.00e+06), m_yield_stress_compression(3.00e+07)
+		m_yield_stress_tension(3.00e+06), m_yield_stress_biaxial{4.20e+06}, 
+		m_yield_stress_compression(3.00e+07)
 	{
 		m_break_strain = 3.00e-03;
 		m_specific_mass = 2.50e+03;

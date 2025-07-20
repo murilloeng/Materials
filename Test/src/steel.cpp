@@ -14,7 +14,7 @@ void tests::steel::test_uniaxial(void)
 	const uint32_t np = 200;
 	const double E = 2.00e+11;
 	const double sy = 4.00e+08;
-	const double Kp = 2.00e+09;
+	const double Kp = 0.00e+00;
 	materials::Mechanic::hardening(true);
 	point.prepare(materials::Stress::uniaxial);
 	//stream
@@ -28,7 +28,7 @@ void tests::steel::test_uniaxial(void)
 	{
 		e = 2 * sy / E * i / np;
 		steel.return_mapping(&s, &C, &e, point);
-		fprintf(stream, "%lf %lf\n", e, s);
+		fprintf(stream, "%.6e %.6e\n", e, s);
 	}
 	fprintf(stream, "e\n");
 	pclose(stream);

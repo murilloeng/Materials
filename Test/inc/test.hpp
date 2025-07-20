@@ -38,6 +38,9 @@ namespace tests
 	namespace concrete
 	{
 		void test_plastic_gradient(void);
+		void test_tension(materials::Concrete::Model);
+		void test_biaxial(materials::Concrete::Model);
+		void test_compression(materials::Concrete::Model);
 		void test_yield_hessian(uint32_t, materials::Concrete::Model);
 		void test_yield_gradient(uint32_t, materials::Concrete::Model);
 	}
