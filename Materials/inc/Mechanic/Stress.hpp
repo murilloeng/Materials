@@ -78,23 +78,5 @@ namespace materials
 		//data
 		uint32_t m_types;
 		const double* m_data;
-
-	public:
-		//types
-		static const uint32_t uniaxial = 
-			uint32_t(type::s11);
-		static const uint32_t biaxial = 
-			uint32_t(type::s11) | uint32_t(type::s22);
-		static const uint32_t triaxial = 
-			uint32_t(type::s11) | uint32_t(type::s22) | uint32_t(type::s33);
-		static const uint32_t beam2D = 
-			uint32_t(type::s11) | uint32_t(type::s12);
-		static const uint32_t beam3D = 
-			uint32_t(type::s11) | uint32_t(type::s13);
-		static const uint32_t solid2D = 
-			uint32_t(type::s11) | uint32_t(type::s22) | uint32_t(type::s12);
-		static const uint32_t solid3D = 
-			uint32_t(type::s11) | uint32_t(type::s22) | uint32_t(type::s33) |
-			uint32_t(type::s12) | uint32_t(type::s13) | uint32_t(type::s23);
 	};
 }

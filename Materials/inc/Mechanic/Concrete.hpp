@@ -40,6 +40,9 @@ namespace materials
 		double yield_stress_tension(double);
 		double yield_stress_tension(void) const;
 
+		double yield_stress_biaxial(double);
+		double yield_stress_biaxial(void) const;
+
 		double yield_stress_compression(double);
 		double yield_stress_compression(void) const;
 

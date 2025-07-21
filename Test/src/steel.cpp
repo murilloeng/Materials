@@ -16,10 +16,10 @@ void tests::steel::test_uniaxial(void)
 	const double sy = 4.00e+08;
 	const double Kp = 0.00e+00;
 	materials::Mechanic::hardening(true);
-	point.prepare(materials::Stress::uniaxial);
+	point.prepare(uint32_t(materials::Stress::type::s11));
 	//stream
 	FILE* stream = popen("gnuplot.exe -p", "w");
-	fprintf(stream, "set grid; plot '-' with lines notitle\n");
+	fprintf(stream, "set grid; plot '-' with lines linecolor rgb '#0000ff' notitle\n");
 	//test
 	steel.yield_stress(sy);
 	steel.elastic_modulus(E);

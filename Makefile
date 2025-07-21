@@ -1,7 +1,7 @@
 #compiler
 CXX = g++
 INCS = -I ..
-WARS = -Wall -Werror
+WARS = -Wall -Werror -Wno-error=unused-variable
 LIBS = -l openblas -l quadrule -l fftw3 -l umfpack
 CXXFLAGS = -std=c++20 -fPIC -pipe -fopenmp -MT $@ -MMD -MP -MF $(subst .o,.d, $@) $(DEFS) $(INCS) $(WARS)
 

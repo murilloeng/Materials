@@ -15,7 +15,7 @@ namespace materials
 	//constructors
 	Concrete::Concrete(void) :
 		m_model(Model::drucker_prager), m_elastic_modulus(2.61e+10), 
-		m_yield_stress_tension(3.00e+06), m_yield_stress_biaxial{4.20e+06}, 
+		m_yield_stress_tension(3.00e+06), m_yield_stress_biaxial{4.20e+07}, 
 		m_yield_stress_compression(3.00e+07)
 	{
 		m_break_strain = 3.00e-03;
@@ -88,6 +88,15 @@ namespace materials
 		return m_yield_stress_tension;
 	}
 
+	double Concrete::yield_stress_biaxial(void) const
+	{
+		return m_yield_stress_biaxial;
+	}
+	double Concrete::yield_stress_biaxial(double yield_stress_biaxial)
+	{
+		return m_yield_stress_biaxial = yield_stress_biaxial;
+	}
+
 	double Concrete::yield_stress_compression(double sc)
 	{
 		return m_yield_stress_compression = sc;
@@ -106,12 +115,12 @@ namespace materials
 	double Concrete::plastic_stress(double) const
 	{
 		//data
-		const double st = m_yield_stress_tension;
+		const double sa = m_yield_stress_tension;
 		const double sb = m_yield_stress_biaxial;
 		const double sc = m_yield_stress_compression;
 		//data
-		const double Adp = 2 * st * sc / (st + sc);
-		const double Abp = st * sc * sb * (8 * sb - 3 * sc + st) / (st + sc) / (2 * sb + st) / (2 * sb - sc);
+		const double Adp = 2 * sa * sc / (sa + sc);
+		const double Abp = sa * sc * sb * (8 * sb - 3 * sc + sa) / (sa + sc) / (2 * sb + sa) / (2 * sb - sc);
 		//stress
 		return 
 			m_model == Model::drucker_prager ? Adp: 
@@ -134,7 +143,7 @@ namespace materials
 		//data
 		const double Bdp = -(sc - sa) / (sa + sc);
 		const double Cbp = +(3 * sb * sa - 2 * sc * sa - sb * sc) / (sa + sc) / (2 * sb + sa) / (2 * sb - sc);
-		const double Bbp = +(sc - sa) * (sb * sc + sb * sa - sc * sa - 4 * sb * sb) / (sa + sc) / (2 * sb + sa) / (2 * sb - sc);
+		const double Bbp = +(sc - sa) * (sb * (sc + sa - 4 * sb) - sc * sa) / (sa + sc) / (2 * sb + sa) / (2 * sb - sc);
 		//yield stress
 		return 
 			m_model == Model::drucker_prager ? se - Bdp * I1 : 
@@ -165,7 +174,7 @@ namespace materials
 		//data
 		const double Bdp = (sa - sc) / (sa + sc);
 		const double Cbp = +(3 * sb * sa - 2 * sc * sa - sb * sc) / (sa + sc) / (2 * sb + sa) / (2 * sb - sc);
-		const double Bbp = +(sc - sa) * (sb * sc + sb * sa - sc * sa - 4 * sb * sb) / (sa + sc) / (2 * sb + sa) / (2 * sb - sc);
+		const double Bbp = +(sc - sa) * (sb * (sc + sa - 4 * sb) - sc * sa) / (sa + sc) / (2 * sb + sa) / (2 * sb - sc);
 		//yield gradient
 		Stress(s, st).gradient_I1(dI1);
 		Stress(s, st).von_mises_gradient(df);

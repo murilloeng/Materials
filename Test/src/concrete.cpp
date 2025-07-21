@@ -13,12 +13,12 @@ void tests::concrete::test_tension(materials::Concrete::Model model)
 	const uint32_t np = 200;
 	materials::Concrete concrete;
 	materials::Mechanic::hardening(true);
-	point.prepare(materials::Stress::uniaxial);
 	const double E = concrete.elastic_modulus();
 	const double st = concrete.yield_stress_tension();
+	point.prepare(uint32_t(materials::Stress::type::s11));
 	//stream
 	FILE* stream = popen("gnuplot.exe -p", "w");
-	fprintf(stream, "set grid; plot '-' with lines notitle\n");
+	fprintf(stream, "set grid; plot '-' with lines linecolor rgb '#0000ff' notitle\n");
 	//test
 	concrete.model(model);
 	for(uint32_t i = 0; i < np; i++)
@@ -32,7 +32,29 @@ void tests::concrete::test_tension(materials::Concrete::Model model)
 }
 void tests::concrete::test_biaxial(materials::Concrete::Model model)
 {
-	return;
+	//data
+	materials::Point point;
+	const uint32_t np = 200;
+	double e[2], s[2], C[4];
+	materials::Concrete concrete;
+	materials::Mechanic::hardening(true);
+	const double E = concrete.elastic_modulus();
+	const double sb = concrete.yield_stress_biaxial();
+	point.prepare(uint32_t(materials::Stress::type::s11) | uint32_t(materials::Stress::type::s22));
+	//stream
+	FILE* stream = popen("gnuplot.exe -p", "w");
+	fprintf(stream, "set grid; plot '-' with lines linecolor rgb '#0000ff' notitle\n");
+	//test
+	concrete.model(model);
+	for(uint32_t i = 0; i < np; i++)
+	{
+		e[0] = -2 * sb / E * i / np;
+		e[1] = -2 * sb / E * i / np;
+		concrete.return_mapping(s, C, e, point);
+		fprintf(stream, "%.6e %.6e\n", e[0], s[0]);
+	}
+	fprintf(stream, "e\n");
+	pclose(stream);
 }
 void tests::concrete::test_compression(materials::Concrete::Model model)
 {
@@ -42,12 +64,12 @@ void tests::concrete::test_compression(materials::Concrete::Model model)
 	const uint32_t np = 200;
 	materials::Concrete concrete;
 	materials::Mechanic::hardening(true);
-	point.prepare(materials::Stress::uniaxial);
 	const double E = concrete.elastic_modulus();
 	const double sc = concrete.yield_stress_compression();
+	point.prepare(uint32_t(materials::Stress::type::s11));
 	//stream
 	FILE* stream = popen("gnuplot.exe -p", "w");
-	fprintf(stream, "set grid; plot '-' with lines notitle\n");
+	fprintf(stream, "set grid; plot '-' with lines linecolor rgb '#0000ff' notitle\n");
 	//test
 	concrete.model(model);
 	for(uint32_t i = 0; i < np; i++)
