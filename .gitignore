@@ -1,9 +1,5 @@
 *
 !*/
-!*.bat
 !*.cpp
 !*.hpp
-!*.sln
-!*.vcxproj
-!*Makefile
 !.gitignore

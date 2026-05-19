@@ -2,15 +2,15 @@
 #include <cmath>
 
 //math
-#include "Math/Math/inc/misc/bits.hpp"
-#include "Math/Math/inc/misc/util.hpp"
-#include "Math/Math/inc/linear/vector.hpp"
-#include "Math/Math/inc/solvers/bisection.hpp"
+#include "Math/inc/misc/bits.hpp"
+#include "Math/inc/misc/util.hpp"
+#include "Math/inc/linear/vector.hpp"
+#include "Math/inc/solvers/bisection.hpp"
 
-//materials
-#include "Materials/Materials/inc/Mechanic/Stress.hpp"
-#include "Materials/Materials/inc/Mechanic/States.hpp"
-#include "Materials/Materials/inc/Mechanic/Mechanic.hpp"
+//Materials
+#include "Materials/inc/Mechanic/Stress.hpp"
+#include "Materials/inc/Mechanic/States.hpp"
+#include "Materials/inc/Mechanic/Mechanic.hpp"
 
 //static
 static double fun_stress(double v, const void** args)

@@ -2,11 +2,11 @@
 #include <cstring>
 
 //math
-#include "Math/Math/inc/misc/bits.hpp"
+#include "Math/inc/misc/bits.hpp"
 
-//materials
-#include "Materials/Materials/inc/Mechanic/Point.hpp"
-#include "Materials/Materials/inc/Mechanic/States.hpp"
+//Materials
+#include "Materials/inc/Mechanic/Point.hpp"
+#include "Materials/inc/Mechanic/States.hpp"
 
 namespace materials
 {

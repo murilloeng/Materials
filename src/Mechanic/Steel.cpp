@@ -1,14 +1,14 @@
 //std
-#include <cmath>
+#include <stdexcept>
 
 //math
-#include "Math/Math/inc/misc/bits.hpp"
-#include "Math/Math/inc/linear/vector.hpp"
+#include "Math/inc/misc/bits.hpp"
+#include "Math/inc/linear/vector.hpp"
 
-//materials
-#include "Materials/Materials/inc/Types.hpp"
-#include "Materials/Materials/inc/Mechanic/Steel.hpp"
-#include "Materials/Materials/inc/Mechanic/Stress.hpp"
+//Materials
+#include "Materials/inc/Types.hpp"
+#include "Materials/inc/Mechanic/Steel.hpp"
+#include "Materials/inc/Mechanic/Stress.hpp"
 
 namespace materials
 {
@@ -30,24 +30,26 @@ namespace materials
 	void Steel::load(FILE* file)
 	{
 		Mechanic::load(file);
-		if(fscanf(file, "%lf %lf %lf %lf",
-			&m_elastic_modulus, &m_poisson_ratio, &m_yield_stress, &m_plastic_modulus) != 4)
+		const char* format = "%lf %lf %lf %lf";
+		if(fscanf(file, format, &m_elastic_modulus, &m_poisson_ratio, &m_yield_stress, &m_plastic_modulus) != 4)
 		{
-			printf("\tError: Unable to load Steel material!\n");
-			exit(EXIT_FAILURE);
+			throw std::runtime_error("Error: Unable to load Steel material!");
 		}
 	}
 	void Steel::save(FILE* file) const
 	{
 		Mechanic::save(file);
 		const char* format = "%+.6e %+.6e %+.6e %+.6e ";
-		fprintf(file, format, m_elastic_modulus, m_poisson_ratio, m_yield_stress, m_plastic_modulus);
+		if(fprintf(file, format, m_elastic_modulus, m_poisson_ratio, m_yield_stress, m_plastic_modulus) < 0)
+		{
+			throw std::runtime_error("Error: Unable to save Steel material!");
+		}
 	}
 
 	//type
-	materials::type Steel::type(void) const
+	Type Steel::type(void) const
 	{
-		return materials::type::steel;
+		return Type::steel;
 	}
 
 	//data

@@ -5,7 +5,7 @@
 
 namespace materials
 {
-	enum class type : uint32_t
+	enum class Type : uint32_t
 	{
 		heat			= 1 << 0,
 		steel			= 1 << 1,

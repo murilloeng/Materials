@@ -1,7 +1,7 @@
 #pragma once
 
-//materials
-#include "Materials/Materials/inc/Mechanic/Mechanic.hpp"
+//Materials
+#include "Materials/inc/Mechanic/Mechanic.hpp"
 
 namespace materials
 {
@@ -26,7 +26,7 @@ namespace materials
 		void save(FILE*) const override;
 
 		//type
-		materials::type type(void) const override;
+		Type type(void) const override;
 
 		//data
 		Model model(Model);

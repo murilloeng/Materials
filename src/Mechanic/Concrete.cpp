@@ -1,14 +1,14 @@
 //std
-#include <cmath>
+#include <stdexcept>
 
 //math
-#include "Math/Math/inc/misc/bits.hpp"
-#include "Math/Math/inc/linear/vector.hpp"
+#include "Math/inc/misc/bits.hpp"
+#include "Math/inc/linear/vector.hpp"
 
-//materials
-#include "Materials/Materials/inc/Types.hpp"
-#include "Materials/Materials/inc/Mechanic/Stress.hpp"
-#include "Materials/Materials/inc/Mechanic/Concrete.hpp"
+//Materials
+#include "Materials/inc/Types.hpp"
+#include "Materials/inc/Mechanic/Stress.hpp"
+#include "Materials/inc/Mechanic/Concrete.hpp"
 
 namespace materials
 {
@@ -32,27 +32,26 @@ namespace materials
 	void Concrete::load(FILE* file)
 	{
 		Mechanic::load(file);
-		if(fscanf(file, "%lf %lf %lf",
-			&m_elastic_modulus, &m_yield_stress_tension, &m_yield_stress_compression) != 3)
+		const char* format = "%lf %lf %lf";
+		if(fscanf(file, format, &m_elastic_modulus, &m_yield_stress_tension, &m_yield_stress_compression) != 3)
 		{
-			printf("\tError: Unable to load Concrete material!\n");
-			exit(EXIT_FAILURE);
+			throw std::runtime_error("Error: Unable to load Concrete material!");
 		}
 	}
 	void Concrete::save(FILE* file) const
 	{
 		Mechanic::save(file);
-		fprintf(file, "%+.6e %+.6e %+.6e ",
-			m_elastic_modulus,
-			m_yield_stress_tension,
-			m_yield_stress_compression
-		);
+		const char* format = "%+.6e %+.6e %+.6e ";
+		if(fprintf(file, format, m_elastic_modulus, m_yield_stress_tension, m_yield_stress_compression) < 0)
+		{
+			throw std::runtime_error("Error: Unable to save Concrete material!");
+		}
 	}
 
 	//type
-	materials::type Concrete::type(void) const
+	Type Concrete::type(void) const
 	{
-		return materials::type::concrete;
+		return Type::concrete;
 	}
 
 	//data

@@ -1,7 +1,7 @@
 #compiler
 CXX = g++
 INCS = -I ..
-WARS = -Wall -Werror -Wno-error=unused-variable
+WARS = -Wall -Werror
 LIBS = -l openblas -l quadrule -l fftw3 -l umfpack
 CXXFLAGS = -std=c++20 -fPIC -pipe -fopenmp -MT $@ -MMD -MP -MF $(subst .o,.d, $@) $(DEFS) $(INCS) $(WARS)
 
@@ -15,20 +15,20 @@ else
 endif
 
 #ouput
-out_exe = Test/dist/$(mode)/test.out
-out_lib = Materials/dist/$(mode)/libmaterials.so
+out_lib = dist/$(mode)/libmaterials.so
+out_exe = Test/dist/$(mode)/materials.out
 
 #sources
+src_lib := $(sort $(shell find -path './src/*.cpp'))
 src_exe := $(sort $(shell find -path './Test/src/*.cpp'))
-src_lib := $(sort $(shell find -path './Materials/src/*.cpp'))
 
 #objects
-obj_exe = $(sort $(subst ./Test/src/, Test/build/$(mode)/, $(addsuffix .o, $(basename $(src_exe)))))
-obj_lib = $(sort $(subst ./Materials/src/, Materials/build/$(mode)/, $(addsuffix .o, $(basename $(src_lib)))))
+obj_lib = $(sort $(subst ./src/,build/$(mode)/, $(addsuffix .o,$(basename $(src_lib)))))
+obj_exe = $(sort $(subst ./Test/src/,Test/build/$(mode)/, $(addsuffix .o,$(basename $(src_exe)))))
 
 #dependencies
-dep_exe = $(subst .o,.d, $(obj_exe))
 dep_lib = $(subst .o,.d, $(obj_lib))
+dep_exe = $(subst .o,.d, $(obj_exe))
 
 #rules
 all : exe
@@ -52,10 +52,10 @@ $(out_lib) : $(obj_lib)
 
 $(out_exe) : $(obj_exe)
 	@mkdir -p $(dir $@)
-	@g++ -o $(out_exe) $(obj_exe) Materials/dist/$(mode)/libmaterials.so  ../Math/Math/dist/$(mode)/libmath.so $(LIBS)
+	@g++ -o $(out_exe) $(obj_exe) dist/$(mode)/libmaterials.so  ../Math/dist/$(mode)/libmath.so $(LIBS)
 	@echo 'executable - $(mode): $@'
 
-Materials/build/$(mode)/%.o : Materials/src/%.cpp Materials/build/$(mode)/%.d
+build/$(mode)/%.o : src/%.cpp build/$(mode)/%.d
 	@echo 'compiling - $(mode): $<'
 	@mkdir -p $(dir $@) && rm -rf $@
 	@$(CXX) $(CXXFLAGS) -c $< -o $@
@@ -74,10 +74,10 @@ $(dep_exe) : ;
 -include $(dep_exe)
 
 clean :
+	@rm -rf dist/$(mode)
+	@rm -rf build/$(mode)
 	@rm -rf Test/dist/$(mode)
 	@rm -rf Test/build/$(mode)
-	@rm -rf Materials/dist/$(mode)
-	@rm -rf Materials/build/$(mode)
 	@echo 'clean - $(mode): complete!'
 
 print-% :

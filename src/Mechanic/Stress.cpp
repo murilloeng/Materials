@@ -3,11 +3,11 @@
 #include <cstring>
 
 //math
-#include "Math/Math/inc/misc/bits.hpp"
-#include "Math/Math/inc/misc/util.hpp"
+#include "Math/inc/misc/bits.hpp"
+#include "Math/inc/misc/util.hpp"
 
-//materials
-#include "Materials/Materials/inc/Mechanic/Stress.hpp"
+//Materials
+#include "Materials/inc/Mechanic/Stress.hpp"
 
 namespace materials
 {

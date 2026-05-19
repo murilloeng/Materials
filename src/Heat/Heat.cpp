@@ -1,9 +1,9 @@
 //std
-#include <cstdlib>
+#include <stdexcept>
 
-//materials
-#include "Materials/Materials/inc/Types.hpp"
-#include "Materials/Materials/inc/Heat/Heat.hpp"
+//Materials
+#include "Materials/inc/Types.hpp"
+#include "Materials/inc/Heat/Heat.hpp"
 
 namespace materials
 {
@@ -25,14 +25,16 @@ namespace materials
 		Material::load(file);
 		if(fscanf(file, "%lf %lf", &m_condutivity, &m_capacity) != 2)
 		{
-			printf("\tError: Unable to load Heat material!\n");
-			exit(EXIT_FAILURE);
+			throw std::runtime_error("Error: Unable to load Heat material!");
 		}
 	}
 	void Heat::save(FILE* file) const
 	{
 		Material::save(file);
-		fprintf(file, "%+.6e %+.6e ", m_condutivity, m_capacity);
+		if(fprintf(file, "%+.6e %+.6e ", m_condutivity, m_capacity) < 0)
+		{
+			throw std::runtime_error("Error: Unable to save Heat material!");
+		}
 	}
 
 	//data
@@ -54,8 +56,8 @@ namespace materials
 	}
 
 	//type
-	materials::type Heat::type(void) const
+	Type Heat::type(void) const
 	{
-		return materials::type::heat;
+		return Type::heat;
 	}
 }

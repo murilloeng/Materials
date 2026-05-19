@@ -6,7 +6,7 @@
 
 namespace materials
 {
-	enum class type : uint32_t;
+	enum class Type : uint32_t;
 }
 
 namespace materials
@@ -26,29 +26,20 @@ namespace materials
 
 	public:
 		//data
-		const char* label(void) const;
-		const char* label(const char*);
-
 		double specific_mass(double);
 		double specific_mass(void) const;
 
 		//type
-		virtual materials::type type(void) const = 0;
+		virtual Type type(void) const = 0;
 
-		//name
-		const char* name(void) const;
-		static const char* name(materials::type);
-
-		//index
-		uint32_t index(void) const;
+		const char* type_name(void) const;
+		static const char* type_name(Type);
 
 		//analysis
-		virtual bool check(void) const;
+		virtual void check(void) const;
 
 	protected:
 		//data
-		uint32_t m_index;
-		char m_label[200];
 		double m_specific_mass;
 	};
 }

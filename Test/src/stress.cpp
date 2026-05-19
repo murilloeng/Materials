@@ -3,12 +3,12 @@
 #include <ctime>
 
 //math
-#include "Math/Math/inc/misc/bits.hpp"
-#include "Math/Math/inc/misc/util.hpp"
-#include "Math/Math/inc/linear/vector.hpp"
+#include "Math/inc/misc/bits.hpp"
+#include "Math/inc/misc/util.hpp"
+#include "Math/inc/linear/vector.hpp"
 
-//materials
-#include "Materials/Materials/inc/Mechanic/Stress.hpp"
+//Materials
+#include "Materials/inc/Mechanic/Stress.hpp"
 
 //test
 #include "Materials/Test/inc/test.hpp"

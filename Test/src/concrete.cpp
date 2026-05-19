@@ -1,6 +1,6 @@
-//materials
-#include "Materials/Materials/inc/Mechanic/Stress.hpp"
-#include "Materials/Materials/inc/Mechanic/Concrete.hpp"
+//Materials
+#include "Materials/inc/Mechanic/Stress.hpp"
+#include "Materials/inc/Mechanic/Concrete.hpp"
 
 //test
 #include "Materials/Test/inc/test.hpp"

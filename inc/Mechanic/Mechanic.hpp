@@ -1,8 +1,8 @@
 #pragma once
 
-//materials
-#include "Materials/Materials/inc/Material.hpp"
-#include "Materials/Materials/inc/Mechanic/Point.hpp"
+//Materials
+#include "Materials/inc/Material.hpp"
+#include "Materials/inc/Mechanic/Point.hpp"
 
 namespace materials
 {

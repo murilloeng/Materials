@@ -1,15 +1,13 @@
 #pragma once
 
-//materials
-#include "Materials/Materials/inc/Material.hpp"
+//Materials
+#include "Materials/inc/Material.hpp"
 
 namespace materials
 {
 	class Heat : public Material
 	{
-		friend class Material;
-
-	protected:
+	public:
 		//constructors
 		Heat(void);
 
@@ -20,7 +18,6 @@ namespace materials
 		void load(FILE*) override;
 		void save(FILE*) const override;
 
-	public:
 		//data
 		double capacity(double);
 		double capacity(void) const;
@@ -29,11 +26,14 @@ namespace materials
 		double condutivity(void) const;
 
 		//type
-		materials::type type(void) const override;
+		Type type(void) const override;
 
 	protected:
 		//data
 		double m_capacity;
 		double m_condutivity;
+
+		//friends
+		friend class Material;
 	};
 }

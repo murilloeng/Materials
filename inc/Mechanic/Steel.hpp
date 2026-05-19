@@ -1,7 +1,7 @@
 #pragma once
 
-//materials
-#include "Materials/Materials/inc/Mechanic/Mechanic.hpp"
+//Materials
+#include "Materials/inc/Mechanic/Mechanic.hpp"
 
 namespace materials
 {
@@ -19,7 +19,7 @@ namespace materials
 		void save(FILE*) const override;
 
 		//type
-		materials::type type(void) const;
+		Type type(void) const;
 
 		//data
 		double yield_stress(double);
