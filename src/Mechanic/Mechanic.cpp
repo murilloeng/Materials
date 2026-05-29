@@ -5,7 +5,7 @@
 #include "Math/inc/misc/bits.hpp"
 #include "Math/inc/misc/util.hpp"
 #include "Math/inc/linear/vector.hpp"
-#include "Math/inc/solvers/bisection.hpp"
+#include "Math/inc/solvers/Bisection.hpp"
 
 //Materials
 #include "Materials/inc/Mechanic/Stress.hpp"
@@ -201,12 +201,12 @@ namespace materials
 	double Mechanic::yield_stress(const double* u, uint32_t st) const
 	{
 		//data
+		math::solvers::Bisection solver;
 		const double sy = plastic_stress(0);
 		const uint32_t ns = math::bit_count(st);
 		if(math::vector(u, ns).norm() == 0) return 0;
 		const math::vector um = math::vector(u, ns).unit();
 		//solver
-		math::bisection solver;
 		solver.m_x1 = solver.m_x2 = sy;
 		solver.m_tolerance = 1e-5 * sy;
 		solver.m_system_2 = fun_stress;
