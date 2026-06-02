@@ -2,8 +2,8 @@
 #include <stdexcept>
 
 //math
-#include "Math/inc/misc/bits.hpp"
-#include "Math/inc/linear/vector.hpp"
+#include "Math/inc/Linear/Vector.hpp"
+#include "Math/inc/Miscellaneous/bits.hpp"
 
 //Materials
 #include "Materials/inc/Types.hpp"
@@ -159,7 +159,7 @@ namespace materials
 		const double Cbp = +(3 * sb * sa - 2 * sc * sa - sb * sc) / (sa + sc) / (2 * sb + sa) / (2 * sb - sc);
 		//hessian
 		Stress(s, st).von_mises_hessian(ddf);
-		math::matrix(ddf, ns, ns) -= Cbp * math::vector(dI1, ns).outer(math::vector(dI1, ns));
+		math::Matrix(ddf, ns, ns) -= Cbp * math::Vector(dI1, ns).outer(math::Vector(dI1, ns));
 	}
 	void Concrete::yield_gradient(double* df, const double* s, uint32_t st) const
 	{
@@ -179,11 +179,11 @@ namespace materials
 		Stress(s, st).von_mises_gradient(df);
 		if(m_model == Model::drucker_prager)
 		{
-			math::vector(df, ns) -= Bdp * math::vector(dI1, ns);
+			math::Vector(df, ns) -= Bdp * math::Vector(dI1, ns);
 		}
 		if(m_model == Model::bresler_pister)
 		{
-			math::vector(df, ns) -= (Bbp + 2 * I1 * Cbp) * math::vector(dI1, ns);
+			math::Vector(df, ns) -= (Bbp + 2 * I1 * Cbp) * math::Vector(dI1, ns);
 		}
 	}
 }

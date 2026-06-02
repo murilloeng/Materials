@@ -2,10 +2,10 @@
 #include <cmath>
 
 //math
-#include "Math/inc/misc/bits.hpp"
-#include "Math/inc/misc/util.hpp"
-#include "Math/inc/linear/vector.hpp"
-#include "Math/inc/solvers/Bisection.hpp"
+#include "Math/inc/Linear/Vector.hpp"
+#include "Math/inc/Solvers/Bisection.hpp"
+#include "Math/inc/Miscellaneous/bits.hpp"
+#include "Math/inc/Miscellaneous/util.hpp"
 
 //Materials
 #include "Materials/inc/Mechanic/Stress.hpp"
@@ -17,10 +17,10 @@ static double fun_stress(double v, const void** args)
 {
 	//data
 	const uint32_t st = *(uint32_t*) args[0];
-	const math::vector& um = *(math::vector*) args[1];
+	const math::Vector& um = *(math::Vector*) args[1];
 	const materials::Mechanic* material = (materials::Mechanic*) args[2];
 	//return
-	const math::vector sm = v * um;
+	const math::Vector sm = v * um;
 	return material->yield_function(sm.data(), st) - material->plastic_stress(0);
 }
 static void fun_yield_function(double* f, const double* s, const void** args)
@@ -162,7 +162,7 @@ namespace materials
 		else
 		{
 			elastic_flexibility(C, st);
-			math::matrix(C, ns, ns) = math::matrix(C, ns, ns).inverse();
+			math::Matrix(C, ns, ns) = math::Matrix(C, ns, ns).inverse();
 			return C;
 		}
 	}
@@ -204,8 +204,8 @@ namespace materials
 		math::solvers::Bisection solver;
 		const double sy = plastic_stress(0);
 		const uint32_t ns = math::bit_count(st);
-		if(math::vector(u, ns).norm() == 0) return 0;
-		const math::vector um = math::vector(u, ns).unit();
+		if(math::Vector(u, ns).norm() == 0) return 0;
+		const math::Vector um = math::Vector(u, ns).unit();
 		//solver
 		solver.m_x1 = solver.m_x2 = sy;
 		solver.m_tolerance = 1e-5 * sy;
@@ -241,12 +241,12 @@ namespace materials
 		elastic_stiffness(C, st);
 		if(!m_inelastic)
 		{
-			math::vector(s, ns) = math::matrix(C, ns, ns) * math::vector(e, ns);
+			math::Vector(s, ns) = math::Matrix(C, ns, ns) * math::Vector(e, ns);
 		}
 		else
 		{
-			const math::vector ep(mp.m_plastic_strain_new, ns);
-			math::vector(s, ns) = math::matrix(C, ns, ns) * (math::vector(e, ns) - ep);
+			const math::Vector ep(mp.m_plastic_strain_new, ns);
+			math::Vector(s, ns) = math::Matrix(C, ns, ns) * (math::Vector(e, ns) - ep);
 		}
 	}
 	void Mechanic::stiffness(double* C, const double* e, const Point& mp) const
@@ -256,14 +256,14 @@ namespace materials
 		const uint32_t ns = math::bit_count(st);
 		//data
 		double da, Kp;
-		const math::vector em(e, ns);
-		math::vector sm(ns), dfs(ns);
-		math::matrix Cm(C, ns, ns), Dm(ns, ns), dfss(ns, ns);
+		const math::Vector em(e, ns);
+		math::Vector sm(ns), dfs(ns);
+		math::Matrix Cm(C, ns, ns), Dm(ns, ns), dfss(ns, ns);
 		//stiffness
 		elastic_stiffness(C, st);
 		if(m_inelastic && mp.m_state_new == state::broken)
 		{
-			math::matrix(C, ns, ns).zeros();
+			math::Matrix(C, ns, ns).zeros();
 		}
 		if(m_inelastic && mp.m_state_new == state::plastic)
 		{
@@ -271,7 +271,7 @@ namespace materials
 			elastic_flexibility(Dm.data(), st);
 			const double a_old = mp.m_hardening_old;
 			const double a_new = mp.m_hardening_new;
-			const math::vector ep(mp.m_plastic_strain_new, ns);
+			const math::Vector ep(mp.m_plastic_strain_new, ns);
 			//stress
 			da = a_new - a_old;
 			sm = Cm * (em - ep);
@@ -294,7 +294,7 @@ namespace materials
 		const uint32_t nt = 100000;
 		const void* args[] = { &st, this };
 		const uint32_t ns = math::bit_count(st);
-		math::matrix s(ns, 1), Ha(ns, ns), Hn(ns, ns);
+		math::Matrix s(ns, 1), Ha(ns, ns), Hn(ns, ns);
 		//test
 		srand(uint32_t(time(nullptr)));
 		for(uint32_t i = 0; i < nt; i++)
@@ -323,7 +323,7 @@ namespace materials
 		const uint32_t nt = 100000;
 		const void* args[] = { &st, this };
 		const uint32_t ns = math::bit_count(st);
-		math::vector s(ns), ga(ns), gn(ns), gr(ns);
+		math::Vector s(ns), ga(ns), gn(ns), gr(ns);
 		//test
 		srand(uint32_t(time(nullptr)));
 		for(uint32_t i = 0; i < nt; i++)
@@ -378,14 +378,14 @@ namespace materials
 		const uint32_t st = mp.m_stress_types;
 		const uint32_t ns = math::bit_count(st);
 		//data
-		math::vector sm(s, ns);
-		math::matrix Cm(C, ns, ns);
+		math::Vector sm(s, ns);
+		math::Matrix Cm(C, ns, ns);
 		double& a_new = mp.m_hardening_new;
 		const double& a_old = mp.m_hardening_old;
-		math::vector ep_new(mp.m_plastic_strain_new, ns);
-		const math::vector ep_old(mp.m_plastic_strain_old, ns);
+		math::Vector ep_new(mp.m_plastic_strain_new, ns);
+		const math::Vector ep_old(mp.m_plastic_strain_old, ns);
 		//check
-		if(mp.m_state_old == state::broken || (m_break && math::vector(e, ns).norm() > break_strain()))
+		if(mp.m_state_old == state::broken || (m_break && math::Vector(e, ns).norm() > break_strain()))
 		{
 			sm.zeros();
 			Cm.zeros();
@@ -403,16 +403,16 @@ namespace materials
 		const uint32_t st = mp.m_stress_types;
 		const uint32_t ns = math::bit_count(st);
 		//data
-		math::vector sm(s, ns);
-		math::matrix Cm(C, ns, ns);
-		const math::vector em(e, ns);
+		math::Vector sm(s, ns);
+		math::Matrix Cm(C, ns, ns);
+		const math::Vector em(e, ns);
 		//new state
 		elastic_stiffness(C, st);
 		double& p_new = mp.m_hardening_new;
-		math::vector ep_new(mp.m_plastic_strain_new, ns);
+		math::Vector ep_new(mp.m_plastic_strain_new, ns);
 		//old state
 		const double& p_old = mp.m_hardening_old;
-		const math::vector ep_old(mp.m_plastic_strain_old, ns);
+		const math::Vector ep_old(mp.m_plastic_strain_old, ns);
 		//predictor
 		p_new = p_old;
 		ep_new = ep_old;
@@ -428,17 +428,17 @@ namespace materials
 		const uint32_t ns = math::bit_count(st);
 		//data
 		double dp, ddp, fp, Kp;
-		const math::vector em(e, ns);
+		const math::Vector em(e, ns);
 		const double sr = plastic_stress(0);
-		math::vector sm(s, ns), rm(ns), dfs(ns);
-		math::matrix Dm(ns, ns), Cm(C, ns, ns), dfss(ns, ns);
+		math::Vector sm(s, ns), rm(ns), dfs(ns);
+		math::Matrix Dm(ns, ns), Cm(C, ns, ns), dfss(ns, ns);
 		//new state
 		elastic_flexibility(Dm.data(), st);
 		double& p_new = mp.m_hardening_new;
-		math::vector ep_new(mp.m_plastic_strain_new, ns);
+		math::Vector ep_new(mp.m_plastic_strain_new, ns);
 		//old state
 		const double& p_old = mp.m_hardening_old;
-		const math::vector ep_old(mp.m_plastic_strain_old, ns);
+		const math::Vector ep_old(mp.m_plastic_strain_old, ns);
 		//loop
 		for(uint32_t i = 0; i < 50; i++)
 		{

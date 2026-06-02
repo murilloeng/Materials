@@ -3,9 +3,9 @@
 #include <ctime>
 
 //math
-#include "Math/inc/misc/bits.hpp"
-#include "Math/inc/misc/util.hpp"
-#include "Math/inc/linear/vector.hpp"
+#include "Math/inc/Linear/Vector.hpp"
+#include "Math/inc/Miscellaneous/bits.hpp"
+#include "Math/inc/Miscellaneous/util.hpp"
 
 //Materials
 #include "Materials/inc/Mechanic/Stress.hpp"
@@ -18,7 +18,7 @@ void tests::stress::test_hessian_I2(uint32_t st)
 	//data
 	const uint32_t nt = 100000;
 	const uint32_t ns = math::bit_count(st);
-	math::matrix s(ns, 1), ddI2a(ns, ns), ddI2n(ns, ns), ddI2r(ns, ns);
+	math::Matrix s(ns, 1), ddI2a(ns, ns), ddI2n(ns, ns), ddI2r(ns, ns);
 	std::function<void(double*, const double*)> function = [st](double* dI2, const double* s){
 		materials::Stress(s, st).gradient_I2(dI2);
 	};
@@ -50,7 +50,7 @@ void tests::stress::test_hessian_I3(uint32_t st)
 	//data
 	const uint32_t nt = 100000;
 	const uint32_t ns = math::bit_count(st);
-	math::matrix s(ns, 1), ddI3a(ns, ns), ddI3n(ns, ns), ddI3r(ns, ns);
+	math::Matrix s(ns, 1), ddI3a(ns, ns), ddI3n(ns, ns), ddI3r(ns, ns);
 	std::function<void(double*, const double*)> function = [st](double* dI3, const double* s){
 		materials::Stress(s, st).gradient_I3(dI3);
 	};
@@ -83,7 +83,7 @@ void tests::stress::test_gradient_I1(uint32_t st)
 	//data
 	const uint32_t nt = 100000;
 	const uint32_t ns = math::bit_count(st);
-	math::vector s(ns), dI1a(ns), dI1n(ns), dI1r(ns);
+	math::Vector s(ns), dI1a(ns), dI1n(ns), dI1r(ns);
 	std::function<void(double*, const double*)> function = [st](double* I1, const double* s){
 		I1[0] = materials::Stress(s, st).invariant_I1();
 	};
@@ -115,7 +115,7 @@ void tests::stress::test_gradient_I2(uint32_t st)
 	//data
 	const uint32_t nt = 100000;
 	const uint32_t ns = math::bit_count(st);
-	math::vector s(ns), dI2a(ns), dI2n(ns), dI2r(ns);
+	math::Vector s(ns), dI2a(ns), dI2n(ns), dI2r(ns);
 	std::function<void(double*, const double*)> function = [st](double* I2, const double* s){
 		I2[0] = materials::Stress(s, st).invariant_I2();
 	};
@@ -147,7 +147,7 @@ void tests::stress::test_gradient_I3(uint32_t st)
 	//data
 	const uint32_t nt = 100000;
 	const uint32_t ns = math::bit_count(st);
-	math::vector s(ns), dI3a(ns), dI3n(ns), dI3r(ns);
+	math::Vector s(ns), dI3a(ns), dI3n(ns), dI3r(ns);
 	std::function<void(double*, const double*)> function = [st](double* I3, const double* s){
 		I3[0] = materials::Stress(s, st).invariant_I3();
 	};
@@ -180,7 +180,7 @@ void tests::stress::test_von_mises_hessian(uint32_t st)
 	//data
 	const uint32_t nt = 100000;
 	const uint32_t ns = math::bit_count(st);
-	math::matrix s(ns, 1), ddsea(ns, ns), ddsen(ns, ns), ddser(ns, ns);
+	math::Matrix s(ns, 1), ddsea(ns, ns), ddsen(ns, ns), ddser(ns, ns);
 	std::function<void(double*, const double*)> function = [st](double* dse, const double* s){
 		materials::Stress(s, st).von_mises_gradient(dse);
 	};
@@ -212,7 +212,7 @@ void tests::stress::test_von_mises_gradient(uint32_t st)
 	//data
 	const uint32_t nt = 100000;
 	const uint32_t ns = math::bit_count(st);
-	math::vector s(ns), dsea(ns), dsen(ns), dser(ns);
+	math::Vector s(ns), dsea(ns), dsen(ns), dser(ns);
 	std::function<void(double*, const double*)> function = [st](double* se, const double* s){
 		se[0] = materials::Stress(s, st).von_mises_stress();
 	};
@@ -245,7 +245,7 @@ void tests::stress::test_hydrostatic_gradient(uint32_t st)
 	//data
 	const uint32_t nt = 100000;
 	const uint32_t ns = math::bit_count(st);
-	math::vector s(ns), dsma(ns), dsmn(ns), dsmr(ns);
+	math::Vector s(ns), dsma(ns), dsmn(ns), dsmr(ns);
 	std::function<void(double*, const double*)> function = [st](double* sm, const double* s){
 		sm[0] = materials::Stress(s, st).hydrostatic_stress();
 	};
@@ -278,7 +278,7 @@ void tests::stress::test_deviatoric_hessian_J2(uint32_t st)
 	//data
 	const uint32_t nt = 100000;
 	const uint32_t ns = math::bit_count(st);
-	math::matrix s(ns, 1), ddJ2a(ns, ns), ddJ2n(ns, ns), ddJ2r(ns, ns);
+	math::Matrix s(ns, 1), ddJ2a(ns, ns), ddJ2n(ns, ns), ddJ2r(ns, ns);
 	std::function<void(double*, const double*)> function = [st](double* dJ2, const double* s){
 		materials::Stress(s, st).deviatoric_gradient_J2(dJ2);
 	};
@@ -310,7 +310,7 @@ void tests::stress::test_deviatoric_hessian_J3(uint32_t st)
 	//data
 	const uint32_t nt = 100000;
 	const uint32_t ns = math::bit_count(st);
-	math::matrix s(ns, 1), ddJ3a(ns, ns), ddJ3n(ns, ns), ddJ3r(ns, ns);
+	math::Matrix s(ns, 1), ddJ3a(ns, ns), ddJ3n(ns, ns), ddJ3r(ns, ns);
 	std::function<void(double*, const double*)> function = [st](double* dJ3, const double* s){
 		materials::Stress(s, st).deviatoric_gradient_J3(dJ3);
 	};
@@ -343,7 +343,7 @@ void tests::stress::test_deviatoric_gradient_J2(uint32_t st)
 	//data
 	const uint32_t nt = 100000;
 	const uint32_t ns = math::bit_count(st);
-	math::vector s(ns), dJ2a(ns), dJ2n(ns), dJ2r(ns);
+	math::Vector s(ns), dJ2a(ns), dJ2n(ns), dJ2r(ns);
 	std::function<void(double*, const double*)> function = [st](double* J2, const double* s){
 		J2[0] = materials::Stress(s, st).deviatoric_invariant_J2();
 	};
@@ -375,7 +375,7 @@ void tests::stress::test_deviatoric_gradient_J3(uint32_t st)
 	//data
 	const uint32_t nt = 100000;
 	const uint32_t ns = math::bit_count(st);
-	math::vector s(ns), dJ3a(ns), dJ3n(ns), dJ3r(ns);
+	math::Vector s(ns), dJ3a(ns), dJ3n(ns), dJ3r(ns);
 	std::function<void(double*, const double*)> function = [st](double* J3, const double* s){
 		J3[0] = materials::Stress(s, st).deviatoric_invariant_J3();
 	};

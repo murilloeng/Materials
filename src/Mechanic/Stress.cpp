@@ -3,8 +3,8 @@
 #include <cstring>
 
 //math
-#include "Math/inc/misc/bits.hpp"
-#include "Math/inc/misc/util.hpp"
+#include "Math/inc/Miscellaneous/bits.hpp"
+#include "Math/inc/Miscellaneous/util.hpp"
 
 //Materials
 #include "Materials/inc/Mechanic/Stress.hpp"

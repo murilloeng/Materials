@@ -2,8 +2,8 @@
 #include <stdexcept>
 
 //math
-#include "Math/inc/misc/bits.hpp"
-#include "Math/inc/linear/vector.hpp"
+#include "Math/inc/Linear/Vector.hpp"
+#include "Math/inc/Miscellaneous/bits.hpp"
 
 //Materials
 #include "Materials/inc/Types.hpp"

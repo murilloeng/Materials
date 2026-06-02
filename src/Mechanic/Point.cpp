@@ -2,7 +2,7 @@
 #include <cstring>
 
 //math
-#include "Math/inc/misc/bits.hpp"
+#include "Math/inc/Miscellaneous/bits.hpp"
 
 //Materials
 #include "Materials/inc/Mechanic/Point.hpp"
