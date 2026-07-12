@@ -1,7 +1,7 @@
 //std
 #include <cstring>
 
-//math
+//Math
 #include "Math/inc/Miscellaneous/bits.hpp"
 
 //Materials

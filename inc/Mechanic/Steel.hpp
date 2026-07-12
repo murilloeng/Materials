@@ -1,11 +1,11 @@
 #pragma once
 
 //Materials
-#include "Materials/inc/Mechanic/Mechanic.hpp"
+#include "Materials/inc/Mechanic/Multiaxial.hpp"
 
 namespace materials
 {
-	class Steel : public Mechanic
+	class Steel : public Multiaxial
 	{
 	public:
 		//constructors
@@ -51,8 +51,5 @@ namespace materials
 		double m_poisson_ratio;
 		double m_plastic_modulus;
 		double m_elastic_modulus;
-
-		//friends
-		friend class Material;
 	};
 }

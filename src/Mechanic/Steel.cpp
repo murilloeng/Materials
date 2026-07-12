@@ -1,7 +1,7 @@
 //std
 #include <stdexcept>
 
-//math
+//Math
 #include "Math/inc/Linear/Vector.hpp"
 #include "Math/inc/Miscellaneous/bits.hpp"
 

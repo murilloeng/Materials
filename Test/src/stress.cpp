@@ -2,7 +2,7 @@
 #include <cmath>
 #include <ctime>
 
-//math
+//Math
 #include "Math/inc/Linear/Vector.hpp"
 #include "Math/inc/Miscellaneous/bits.hpp"
 #include "Math/inc/Miscellaneous/util.hpp"

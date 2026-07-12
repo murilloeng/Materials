@@ -2,7 +2,7 @@
 #include <cmath>
 #include <cstring>
 
-//math
+//Math
 #include "Math/inc/Miscellaneous/bits.hpp"
 #include "Math/inc/Miscellaneous/util.hpp"
 

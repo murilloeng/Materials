@@ -1,11 +1,11 @@
 #pragma once
 
 //Materials
-#include "Materials/inc/Mechanic/Mechanic.hpp"
+#include "Materials/inc/Mechanic/Multiaxial.hpp"
 
 namespace materials
 {
-	class Concrete : public Mechanic
+	class Concrete : public Multiaxial
 	{
 	public:
 		//type
@@ -64,8 +64,5 @@ namespace materials
 		double m_yield_stress_tension;
 		double m_yield_stress_biaxial;
 		double m_yield_stress_compression;
-
-		//friends
-		friend class Material;
 	};
 }
