@@ -5,7 +5,7 @@
 //test
 #include "Materials/Test/inc/test.hpp"
 
-void tests::steel::test_uniaxial(void)
+void tests::steel::uniaxial(void)
 {
 	//data
 	double e, s, C;
@@ -18,7 +18,7 @@ void tests::steel::test_uniaxial(void)
 	materials::Mechanic::hardening(true);
 	point.prepare(uint32_t(materials::Stress::type::s11));
 	//stream
-	FILE* stream = popen("gnuplot.exe -p", "w");
+	FILE* stream = popen("gnuplot -p", "w");
 	fprintf(stream, "set grid; plot '-' with lines linecolor rgb '#0000ff' notitle\n");
 	//test
 	steel.yield_stress(sy);
@@ -33,18 +33,18 @@ void tests::steel::test_uniaxial(void)
 	fprintf(stream, "e\n");
 	pclose(stream);
 }
-void tests::steel::test_plastic_gradient(void)
+void tests::steel::plastic_gradient(void)
 {
 	materials::Steel steel;
 	steel.plastic_modulus(1e5);
 	steel.test_plastic_gradient();
 }
-void tests::steel::test_yield_hessian(uint32_t st)
+void tests::steel::yield_hessian(uint32_t st)
 {
 	materials::Steel steel;
 	steel.test_yield_hessian(st);
 }
-void tests::steel::test_yield_gradient(uint32_t st)
+void tests::steel::yield_gradient(uint32_t st)
 {
 	materials::Steel steel;
 	steel.test_yield_gradient(st);

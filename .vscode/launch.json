@@ -12,7 +12,7 @@
 			"name": "gdb - debug",
 			"externalConsole": false,
 			"cwd": "${workspaceFolder}",
-			"program": "${workspaceFolder}/Test/dist/debug/test.out",
+			"program": "${workspaceFolder}/Test/dist/debug/materials.out",
 			"setupCommands":
 			[
 				{
@@ -32,7 +32,7 @@
 			"name": "gdb - release",
 			"externalConsole": false,
 			"cwd": "${workspaceFolder}",
-			"program": "${workspaceFolder}/Test/dist/release/test.out",
+			"program": "${workspaceFolder}/Test/dist/release/materials.out",
 			"setupCommands":
 			[
 				{
@@ -41,28 +41,6 @@
 					"ignoreFailures": true
 				}
 			]
-		},
-		{
-			"args": [],
-			"environment": [],
-			"type": "cppvsdbg",
-			"request": "launch",
-			"stopAtEntry": false,
-			"name": "msvc - debug",
-			"cwd": "${workspaceFolder}",
-			"console": "integratedTerminal",
-			"program": "${workspaceFolder}/Test/dist/x64/Debug/Test.exe"
-		},
-		{
-			"args": [],
-			"environment": [],
-			"type": "cppvsdbg",
-			"request": "launch",
-			"stopAtEntry": false,
-			"name": "msvc - release",
-			"cwd": "${workspaceFolder}",
-			"console": "integratedTerminal",
-			"program": "${workspaceFolder}/Test/dist/x64/Release/Test.exe"
 		}
 	]
 }

@@ -5,7 +5,7 @@
 //test
 #include "Materials/Test/inc/test.hpp"
 
-void tests::concrete::test_tension(materials::Concrete::Model model)
+void tests::concrete::tension(materials::Concrete::Model model)
 {
 	//data
 	double e, s, C;
@@ -17,7 +17,7 @@ void tests::concrete::test_tension(materials::Concrete::Model model)
 	const double st = concrete.yield_stress_tension();
 	point.prepare(uint32_t(materials::Stress::type::s11));
 	//stream
-	FILE* stream = popen("gnuplot.exe -p", "w");
+	FILE* stream = popen("gnuplot -p", "w");
 	fprintf(stream, "set grid; plot '-' with lines linecolor rgb '#0000ff' notitle\n");
 	//test
 	concrete.model(model);
@@ -30,7 +30,7 @@ void tests::concrete::test_tension(materials::Concrete::Model model)
 	fprintf(stream, "e\n");
 	pclose(stream);
 }
-void tests::concrete::test_biaxial(materials::Concrete::Model model)
+void tests::concrete::biaxial(materials::Concrete::Model model)
 {
 	//data
 	materials::Point point;
@@ -42,7 +42,7 @@ void tests::concrete::test_biaxial(materials::Concrete::Model model)
 	const double sb = concrete.yield_stress_biaxial();
 	point.prepare(uint32_t(materials::Stress::type::s11) | uint32_t(materials::Stress::type::s22));
 	//stream
-	FILE* stream = popen("gnuplot.exe -p", "w");
+	FILE* stream = popen("gnuplot -p", "w");
 	fprintf(stream, "set grid; plot '-' with lines linecolor rgb '#0000ff' notitle\n");
 	//test
 	concrete.model(model);
@@ -56,7 +56,7 @@ void tests::concrete::test_biaxial(materials::Concrete::Model model)
 	fprintf(stream, "e\n");
 	pclose(stream);
 }
-void tests::concrete::test_compression(materials::Concrete::Model model)
+void tests::concrete::compression(materials::Concrete::Model model)
 {
 	//data
 	double e, s, C;
@@ -68,7 +68,7 @@ void tests::concrete::test_compression(materials::Concrete::Model model)
 	const double sc = concrete.yield_stress_compression();
 	point.prepare(uint32_t(materials::Stress::type::s11));
 	//stream
-	FILE* stream = popen("gnuplot.exe -p", "w");
+	FILE* stream = popen("gnuplot -p", "w");
 	fprintf(stream, "set grid; plot '-' with lines linecolor rgb '#0000ff' notitle\n");
 	//test
 	concrete.model(model);
@@ -81,18 +81,18 @@ void tests::concrete::test_compression(materials::Concrete::Model model)
 	fprintf(stream, "e\n");
 	pclose(stream);
 }
-void tests::concrete::test_plastic_gradient(void)
+void tests::concrete::plastic_gradient(void)
 {
 	materials::Concrete concrete;
 	concrete.test_plastic_gradient();
 }
-void tests::concrete::test_yield_hessian(uint32_t st, materials::Concrete::Model model)
+void tests::concrete::yield_hessian(uint32_t st, materials::Concrete::Model model)
 {
 	materials::Concrete concrete;
 	concrete.model(model);
 	concrete.test_yield_hessian(st);
 }
-void tests::concrete::test_yield_gradient(uint32_t st, materials::Concrete::Model model)
+void tests::concrete::yield_gradient(uint32_t st, materials::Concrete::Model model)
 {
 	materials::Concrete concrete;
 	concrete.model(model);

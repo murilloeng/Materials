@@ -1,5 +1,6 @@
 //std
-#include <cmath>
+#include <cfloat>
+#include <cstdlib>
 
 //Materials
 #include "Materials/inc/Mechanic/Stress.hpp"
@@ -9,7 +10,7 @@
 namespace materials
 {
 	//constructors
-	Mechanic::Mechanic(void)
+	Mechanic::Mechanic(void) : m_break_strain{DBL_MAX}
 	{
 		return;
 	}

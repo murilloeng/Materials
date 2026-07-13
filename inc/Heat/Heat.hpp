@@ -25,9 +25,6 @@ namespace materials
 		double condutivity(double);
 		double condutivity(void) const;
 
-		//type
-		Type type(void) const override;
-
 	protected:
 		//data
 		double m_capacity;

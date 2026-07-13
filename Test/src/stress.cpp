@@ -13,7 +13,7 @@
 //test
 #include "Materials/Test/inc/test.hpp"
 
-void tests::stress::test_hessian_I2(uint32_t st)
+void tests::stress::hessian_I2(uint32_t st)
 {
 	//data
 	const uint32_t nt = 100000;
@@ -45,7 +45,7 @@ void tests::stress::test_hessian_I2(uint32_t st)
 		}
 	}
 }
-void tests::stress::test_hessian_I3(uint32_t st)
+void tests::stress::hessian_I3(uint32_t st)
 {
 	//data
 	const uint32_t nt = 100000;
@@ -78,7 +78,7 @@ void tests::stress::test_hessian_I3(uint32_t st)
 	}
 }
 
-void tests::stress::test_gradient_I1(uint32_t st)
+void tests::stress::gradient_I1(uint32_t st)
 {
 	//data
 	const uint32_t nt = 100000;
@@ -110,7 +110,7 @@ void tests::stress::test_gradient_I1(uint32_t st)
 		}
 	}
 }
-void tests::stress::test_gradient_I2(uint32_t st)
+void tests::stress::gradient_I2(uint32_t st)
 {
 	//data
 	const uint32_t nt = 100000;
@@ -142,7 +142,7 @@ void tests::stress::test_gradient_I2(uint32_t st)
 		}
 	}
 }
-void tests::stress::test_gradient_I3(uint32_t st)
+void tests::stress::gradient_I3(uint32_t st)
 {
 	//data
 	const uint32_t nt = 100000;
@@ -175,7 +175,7 @@ void tests::stress::test_gradient_I3(uint32_t st)
 	}
 }
 
-void tests::stress::test_von_mises_hessian(uint32_t st)
+void tests::stress::von_mises_hessian(uint32_t st)
 {
 	//data
 	const uint32_t nt = 100000;
@@ -207,7 +207,7 @@ void tests::stress::test_von_mises_hessian(uint32_t st)
 		}
 	}
 }
-void tests::stress::test_von_mises_gradient(uint32_t st)
+void tests::stress::von_mises_gradient(uint32_t st)
 {
 	//data
 	const uint32_t nt = 100000;
@@ -240,7 +240,7 @@ void tests::stress::test_von_mises_gradient(uint32_t st)
 	}
 }
 
-void tests::stress::test_hydrostatic_gradient(uint32_t st)
+void tests::stress::hydrostatic_gradient(uint32_t st)
 {
 	//data
 	const uint32_t nt = 100000;
@@ -273,7 +273,7 @@ void tests::stress::test_hydrostatic_gradient(uint32_t st)
 	}
 }
 
-void tests::stress::test_deviatoric_hessian_J2(uint32_t st)
+void tests::stress::deviatoric_hessian_J2(uint32_t st)
 {
 	//data
 	const uint32_t nt = 100000;
@@ -305,7 +305,7 @@ void tests::stress::test_deviatoric_hessian_J2(uint32_t st)
 		}
 	}
 }
-void tests::stress::test_deviatoric_hessian_J3(uint32_t st)
+void tests::stress::deviatoric_hessian_J3(uint32_t st)
 {
 	//data
 	const uint32_t nt = 100000;
@@ -338,7 +338,7 @@ void tests::stress::test_deviatoric_hessian_J3(uint32_t st)
 	}
 }
 
-void tests::stress::test_deviatoric_gradient_J2(uint32_t st)
+void tests::stress::deviatoric_gradient_J2(uint32_t st)
 {
 	//data
 	const uint32_t nt = 100000;
@@ -370,7 +370,7 @@ void tests::stress::test_deviatoric_gradient_J2(uint32_t st)
 		}
 	}
 }
-void tests::stress::test_deviatoric_gradient_J3(uint32_t st)
+void tests::stress::deviatoric_gradient_J3(uint32_t st)
 {
 	//data
 	const uint32_t nt = 100000;

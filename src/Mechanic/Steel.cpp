@@ -6,7 +6,6 @@
 #include "Math/inc/Miscellaneous/bits.hpp"
 
 //Materials
-#include "Materials/inc/Types.hpp"
 #include "Materials/inc/Mechanic/Steel.hpp"
 #include "Materials/inc/Mechanic/Stress.hpp"
 
@@ -44,12 +43,6 @@ namespace materials
 		{
 			throw std::runtime_error("Error: Unable to save Steel material!");
 		}
-	}
-
-	//type
-	Type Steel::type(void) const
-	{
-		return Type::steel;
 	}
 
 	//data

@@ -29,12 +29,6 @@ namespace materials
 		double specific_mass(double);
 		double specific_mass(void) const;
 
-		//type
-		virtual Type type(void) const = 0;
-
-		const char* type_name(void) const;
-		static const char* type_name(Type);
-
 		//analysis
 		virtual void check(void) const;
 

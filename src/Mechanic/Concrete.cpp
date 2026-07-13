@@ -6,7 +6,6 @@
 #include "Math/inc/Miscellaneous/bits.hpp"
 
 //Materials
-#include "Materials/inc/Types.hpp"
 #include "Materials/inc/Mechanic/Stress.hpp"
 #include "Materials/inc/Mechanic/Concrete.hpp"
 
@@ -46,12 +45,6 @@ namespace materials
 		{
 			throw std::runtime_error("Error: Unable to save Concrete material!");
 		}
-	}
-
-	//type
-	Type Concrete::type(void) const
-	{
-		return Type::concrete;
 	}
 
 	//data

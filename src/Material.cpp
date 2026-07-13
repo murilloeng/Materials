@@ -2,7 +2,6 @@
 #include <stdexcept>
 
 //Materials
-#include "Materials/inc/Types.hpp"
 #include "Materials/inc/Material.hpp"
 
 namespace materials
@@ -43,26 +42,6 @@ namespace materials
 	double Material::specific_mass(double specific_mass)
 	{
 		return m_specific_mass = specific_mass;
-	}
-
-	//name
-	const char* Material::type_name(void) const
-	{
-		return type_name(type());
-	}
-	const char* Material::type_name(Type type)
-	{
-		switch(type)
-		{
-			case Type::heat:
-				return "Heat";
-			case Type::steel:
-				return "Steel";
-			case Type::concrete:
-				return "Concrete";
-			default:
-				return "";
-		}
 	}
 
 	//analysis

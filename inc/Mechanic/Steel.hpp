@@ -18,9 +18,6 @@ namespace materials
 		void load(FILE*) override;
 		void save(FILE*) const override;
 
-		//type
-		Type type(void) const;
-
 		//data
 		double yield_stress(double);
 		double yield_stress(void) const;

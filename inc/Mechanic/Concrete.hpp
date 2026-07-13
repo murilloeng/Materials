@@ -25,9 +25,6 @@ namespace materials
 		void load(FILE*) override;
 		void save(FILE*) const override;
 
-		//type
-		Type type(void) const override;
-
 		//data
 		Model model(Model);
 		Model model(void) const;

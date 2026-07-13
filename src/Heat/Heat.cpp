@@ -2,7 +2,6 @@
 #include <stdexcept>
 
 //Materials
-#include "Materials/inc/Types.hpp"
 #include "Materials/inc/Heat/Heat.hpp"
 
 namespace materials
@@ -53,11 +52,5 @@ namespace materials
 	double Heat::condutivity(double condutivity)
 	{
 		return m_condutivity = condutivity;
-	}
-
-	//type
-	Type Heat::type(void) const
-	{
-		return Type::heat;
 	}
 }
