@@ -19,15 +19,15 @@ static const uint32_t np = 100;
 static const double E = 2.00e+11;
 static const double K = 1.00e+11;
 static const double sy = 4.00e+08;
-static const double sr = 0.00e+00;
+static const double sr = 2.00e+08;
 
 static double data[2 * (np + 1)];
 
 static double function(double e)
 {
-	const double ey = sy / E;
 	const double Et = E * K / (E + K);
-	return fabs(e) < ey ? E * e + sr : sy * math::sign(e) + Et * (e - ey * math::sign(e)) + sr;
+	const double ey = (sy - sr * math::sign(e)) / E;
+	return fabs(E * e + sr) < sy ? E * e + sr : sy * math::sign(e) + Et * (e - ey * math::sign(e));
 }
 
 void tests::uniaxial::tension(void)
