@@ -12,6 +12,7 @@ int main(void)
 	const bool steel = false;
 	const bool stress = false;
 	const bool concrete = false;
+	const bool uniaxial = true;
 	const uint32_t st = uint32_t(materials::Stress::type::s11);
 	const materials::Concrete::Model model = materials::Concrete::Model::bresler_pister;
 	//test
@@ -46,7 +47,11 @@ int main(void)
 		tests::concrete::yield_hessian(st, model);
 		tests::concrete::yield_gradient(st, model);
 	}
-	tests::uniaxial::tension();
+	if(uniaxial)
+	{
+		tests::uniaxial::tension();
+		tests::uniaxial::compression();
+	}
 	//return
 	return EXIT_SUCCESS;
 }

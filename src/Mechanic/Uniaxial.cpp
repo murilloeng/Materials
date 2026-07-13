@@ -130,13 +130,13 @@ namespace materials
 			point.m_state_new == state::broken ? 0 :
 			point.m_state_new == state::elastic ? E : E * K / (E + K);
 	}
-	void Uniaxial::return_mapping(double& s, double& C, double e, Point& point) const
+	void Uniaxial::return_mapping(double& s, double& C, double e, double sr, Point& point) const
 	{
 		//data
 		double f, sy, Kp;
 		const uint32_t iteration_max = 100;
 		const double E = m_elastic_modulus;
-		const double sr = plastic_stress(0);
+		const double sa = plastic_stress(0);
 		//new state
 		double& p_new = point.m_hardening_new;
 		double& ep_new = point.m_plastic_strain_new[0];
@@ -151,7 +151,7 @@ namespace materials
 		C = E;
 		p_new = p_old;
 		ep_new = ep_old;
-		s = E * (e - ep_new);
+		s = E * (e - ep_new) + sr;
 		point.m_state_new = state::elastic;
 		if(fabs(s) < plastic_stress(p_new)) return;
 		//corrector
@@ -163,10 +163,10 @@ namespace materials
 			Kp = plastic_gradient(p_new);
 			ep_new = ep_old + (p_new - p_old) * math::sign(s);
 			//check
-			s = E * (e - ep_new);
 			C = E * Kp / (E + Kp);
+			s = E * (e - ep_new) + sr;
 			f = fabs(s) - sy;
-			if(fabs(f) < 1e-5 * sr) break;
+			if(fabs(f) < 1e-5 * sa) break;
 			//update
 			p_new += f / (E + Kp);
 		}

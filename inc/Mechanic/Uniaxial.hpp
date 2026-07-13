@@ -53,7 +53,7 @@ namespace materials
 		//return mapping
 		void stress(double&, double, const Point&) const;
 		void stiffness(double&, double, const Point&) const;
-		void return_mapping(double&, double&, double, Point&) const;
+		void return_mapping(double&, double&, double, double, Point&) const;
 
 	protected:
 		//data
