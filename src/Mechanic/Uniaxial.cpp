@@ -130,12 +130,61 @@ namespace materials
 			point.m_state_new == state::broken ? 0 :
 			point.m_state_new == state::elastic ? E : E * K / (E + K);
 	}
-	void Uniaxial::return_mapping(double& s, double& C, double e, double sr, Point& point) const
+	bool Uniaxial::return_mapping(double& s, double& C, double e, double sr, Point& point) const
+	{
+		return 
+			return_mapping_elastic(s, C, e, sr, point) ? true :
+			return_mapping_fracture(s, C, e, sr, point) ? true :
+			return_mapping_predictor(s, C, e, sr, point) ? true : 
+			return_mapping_corrector(s, C, e, sr, point);
+	}
+
+	//return mapping
+	bool Uniaxial::return_mapping_elastic(double& s, double& C, double e, double sr, Point& point) const
+	{
+		//data
+		C = m_elastic_modulus;
+		s = m_elastic_modulus * e + sr;
+		point.m_state_new = state::elastic;
+		//return
+		return !m_inelastic;
+	}
+	bool Uniaxial::return_mapping_buckling(double& s, double& C, double e, double sr, Point& point) const
+	{
+		return false;
+	}
+	bool Uniaxial::return_mapping_fracture(double& s, double& C, double e, double sr, Point& point) const
+	{
+		//data
+		s = C = 0;
+		point.m_state_new = state::broken;
+		//return
+		return m_break && fabs(e) > m_break_strain;
+	}
+	bool Uniaxial::return_mapping_predictor(double& s, double& C, double e, double sr, Point& point) const
+	{
+		//data
+		const double E = C = m_elastic_modulus;
+		//new state
+		double& p_new = point.m_hardening_new;
+		double& ep_new = point.m_plastic_strain_new[0];
+		//old state
+		const double p_old = point.m_hardening_old;
+		const double ep_old = point.m_plastic_strain_old[0];
+		//predictor
+		p_new = p_old;
+		ep_new = ep_old;
+		s = E * (e - ep_old) + sr;
+		point.m_state_new = state::elastic;
+		//return
+		return fabs(s) < plastic_stress(p_new);
+	}
+	bool Uniaxial::return_mapping_corrector(double& s, double& C, double e, double sr, Point& point) const
 	{
 		//data
 		double f, sy, Kp;
-		const uint32_t iteration_max = 100;
 		const double E = m_elastic_modulus;
+		const uint32_t iteration_max = 100;
 		const double sa = plastic_stress(0);
 		//new state
 		double& p_new = point.m_hardening_new;
@@ -143,17 +192,6 @@ namespace materials
 		//old state
 		const double p_old = point.m_hardening_old;
 		const double ep_old = point.m_plastic_strain_old[0];
-		//fracture
-		s = C = 0;
-		point.m_state_new = state::broken;
-		if(m_break && fabs(e) > m_break_strain) return;
-		//predictor
-		C = E;
-		p_new = p_old;
-		ep_new = ep_old;
-		s = E * (e - ep_new) + sr;
-		point.m_state_new = state::elastic;
-		if(fabs(s) < plastic_stress(p_new)) return;
 		//corrector
 		point.m_state_new = state::plastic;
 		for(uint32_t i = 0; i < iteration_max; i++)
@@ -162,14 +200,17 @@ namespace materials
 			sy = plastic_stress(p_new);
 			Kp = plastic_gradient(p_new);
 			ep_new = ep_old + (p_new - p_old) * math::sign(s);
-			//check
+			//state
 			C = E * Kp / (E + Kp);
 			s = E * (e - ep_new) + sr;
+			//check
 			f = fabs(s) - sy;
-			if(fabs(f) < 1e-5 * sa) break;
+			if(fabs(f) < 1e-5 * sa) return true;
 			//update
 			p_new += f / (E + Kp);
 		}
+		//return
+		return false;
 	}
 
 	bool Uniaxial::m_buckling = false;

@@ -53,9 +53,16 @@ namespace materials
 		//return mapping
 		void stress(double&, double, const Point&) const;
 		void stiffness(double&, double, const Point&) const;
-		void return_mapping(double&, double&, double, double, Point&) const;
+		bool return_mapping(double&, double&, double, double, Point&) const;
 
 	protected:
+		//return mapping
+		bool return_mapping_elastic(double&, double&, double, double, Point&) const;
+		bool return_mapping_buckling(double&, double&, double, double, Point&) const;
+		bool return_mapping_fracture(double&, double&, double, double, Point&) const;
+		bool return_mapping_predictor(double&, double&, double, double, Point&) const;
+		bool return_mapping_corrector(double&, double&, double, double, Point&) const;
+
 		//data
 		double m_yield_stress;
 		double m_buckling_stress;

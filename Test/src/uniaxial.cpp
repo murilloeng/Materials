@@ -39,6 +39,7 @@ void tests::uniaxial::tension(void)
 	const uint32_t st = uint32_t(materials::Stress::type::s11);
 	//return mapping
 	point.prepare(st);
+	material.inelastic(true);
 	material.yield_stress(sy);
 	material.elastic_modulus(E);
 	material.plastic_modulus(K);
@@ -66,6 +67,7 @@ void tests::uniaxial::compression(void)
 	const uint32_t st = uint32_t(materials::Stress::type::s11);
 	//return mapping
 	point.prepare(st);
+	material.inelastic(true);
 	material.yield_stress(sy);
 	material.elastic_modulus(E);
 	material.plastic_modulus(K);
