@@ -2,7 +2,7 @@
 CXX = g++
 INCS = -I ..
 WARS = -Wall -Werror
-LIBS = -l openblas -l quadrule -l fftw3 -l umfpack
+LIBS = -l openblas -l arpack -l umfpack -l quadrule -l fftw3
 CXXFLAGS = -std=c++20 -fPIC -pipe -fopenmp -MT $@ -MMD -MP -MF $(subst .o,.d, $@) $(DEFS) $(INCS) $(WARS)
 
 #mode
