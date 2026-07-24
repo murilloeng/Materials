@@ -42,6 +42,7 @@ namespace materials
 		double plastic_stress(double) const override;
 		double plastic_gradient(double) const override;
 
+		double poisson_ratio(double);
 		double poisson_ratio(void) const override;
 
 		double elastic_modulus(double);
@@ -65,13 +66,14 @@ namespace materials
 
 		//data
 		double m_yield_stress;
+		double m_poisson_ratio;
 		double m_buckling_stress;
 		double m_elastic_modulus;
 		double m_plastic_modulus;
 		double m_thermal_coefficient;
 
 		static bool m_buckling;
-		std::function<double(double)> m_yield_stress_function;
-		std::function<double(double)> m_plastic_modulus_function;
+		Function m_yield_stress_function;
+		Function m_plastic_modulus_function;
 	};
 }
