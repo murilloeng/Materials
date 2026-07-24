@@ -12,7 +12,7 @@ namespace materials
 {
 	//constructors
 	Uniaxial::Uniaxial(void) : 
-		m_yield_stress{0}, m_poisson_ratio{0.3}, m_buckling_stress{0}, m_elastic_modulus{0}, m_plastic_modulus{0}, m_thermal_coefficient{0}
+		m_yield_stress{0}, m_poisson_ratio{0}, m_buckling_stress{0}, m_elastic_modulus{0}, m_plastic_modulus{0}, m_thermal_coefficient{0}
 	{
 		return;
 	}
