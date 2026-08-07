@@ -15,15 +15,14 @@ namespace materials
 		~Stress(void);
 
 		//enums
-		enum class type : uint32_t
+		enum class Type : uint32_t
 		{
-			s11 = 1 << 0, s22 = 1 << 1, s33 = 1 << 2,
-			s12 = 1 << 3, s13 = 1 << 4, s23 = 1 << 5, last
+			s11, s22, s33, s12, s13, s23, last
 		};
 
 		//operators
-		double operator()(type) const;
-		double operator[](type) const;
+		double operator()(Type) const;
+		double operator[](Type) const;
 
 		//invariants
 		double invariant_I1(void) const;

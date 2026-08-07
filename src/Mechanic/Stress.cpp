@@ -24,14 +24,14 @@ namespace materials
 	}
 
 	//operators
-	double Stress::operator()(type type) const
+	double Stress::operator()(Type type) const
 	{
-		const uint32_t utype = uint32_t(type);
+		const uint32_t utype = 1 << uint32_t(type);
 		return m_types & utype ? m_data[math::bit_index(m_types, utype)] : 0;
 	}
-	double Stress::operator[](type type) const
+	double Stress::operator[](Type type) const
 	{
-		const uint32_t utype = uint32_t(type);
+		const uint32_t utype = 1 << uint32_t(type);
 		return m_types & utype ? m_data[math::bit_index(m_types, utype)] : 0;
 	}
 
@@ -39,33 +39,33 @@ namespace materials
 	double Stress::invariant_I1(void) const
 	{
 		//stress
-		const double s11 = (*this)[type::s11];
-		const double s22 = (*this)[type::s22];
-		const double s33 = (*this)[type::s33];
+		const double s11 = (*this)[Type::s11];
+		const double s22 = (*this)[Type::s22];
+		const double s33 = (*this)[Type::s33];
 		//return
 		return s11 + s22 + s33;
 	}
 	double Stress::invariant_I2(void) const
 	{
 		//stress
-		const double s11 = (*this)[type::s11];
-		const double s22 = (*this)[type::s22];
-		const double s33 = (*this)[type::s33];
-		const double s12 = (*this)[type::s12];
-		const double s13 = (*this)[type::s13];
-		const double s23 = (*this)[type::s23];
+		const double s11 = (*this)[Type::s11];
+		const double s22 = (*this)[Type::s22];
+		const double s33 = (*this)[Type::s33];
+		const double s12 = (*this)[Type::s12];
+		const double s13 = (*this)[Type::s13];
+		const double s23 = (*this)[Type::s23];
 		//return
 		return s11 * s22 + s11 * s33 + s22 * s33 - s12 * s12 - s13 * s13 - s23 * s23;
 	}
 	double Stress::invariant_I3(void) const
 	{
 		//stress
-		const double s11 = (*this)[type ::s11];
-		const double s22 = (*this)[type ::s22];
-		const double s33 = (*this)[type ::s33];
-		const double s12 = (*this)[type ::s12];
-		const double s13 = (*this)[type ::s13];
-		const double s23 = (*this)[type ::s23];
+		const double s11 = (*this)[Type ::s11];
+		const double s22 = (*this)[Type ::s22];
+		const double s33 = (*this)[Type ::s33];
+		const double s12 = (*this)[Type ::s12];
+		const double s13 = (*this)[Type ::s13];
+		const double s23 = (*this)[Type ::s23];
 		//return
 		return s11 * s22 * s33 + 2 * s12 * s13 * s23 - s11 * s23 * s23 - s22 * s13 * s13 - s33 * s12 * s12;
 	}
@@ -111,12 +111,12 @@ namespace materials
 	{
 		//data
 		double dIc[6];
-		const double s11 = (*this)[type::s11];
-		const double s22 = (*this)[type::s22];
-		const double s33 = (*this)[type::s33];
-		const double s12 = (*this)[type::s12];
-		const double s13 = (*this)[type::s13];
-		const double s23 = (*this)[type::s23];
+		const double s11 = (*this)[Type::s11];
+		const double s22 = (*this)[Type::s22];
+		const double s33 = (*this)[Type::s33];
+		const double s12 = (*this)[Type::s12];
+		const double s13 = (*this)[Type::s13];
+		const double s23 = (*this)[Type::s23];
 		//I2 gradient
 		dIc[3] = -2 * s12;
 		dIc[4] = -2 * s13;
@@ -131,12 +131,12 @@ namespace materials
 	{
 		//data
 		double dIc[6];
-		const double s11 = (*this)[type::s11];
-		const double s22 = (*this)[type::s22];
-		const double s33 = (*this)[type::s33];
-		const double s12 = (*this)[type::s12];
-		const double s13 = (*this)[type::s13];
-		const double s23 = (*this)[type::s23];
+		const double s11 = (*this)[Type::s11];
+		const double s22 = (*this)[Type::s22];
+		const double s33 = (*this)[Type::s33];
+		const double s12 = (*this)[Type::s12];
+		const double s13 = (*this)[Type::s13];
+		const double s23 = (*this)[Type::s23];
 		//I3 gradient
 		dIc[0] = s22 * s33 - s23 * s23;
 		dIc[1] = s11 * s33 - s13 * s13;
@@ -167,12 +167,12 @@ namespace materials
 		//data
 		double ddIc[36];
 		memset(ddIc, 0, sizeof(ddIc));
-		const double s11 = (*this)[type::s11];
-		const double s22 = (*this)[type::s22];
-		const double s33 = (*this)[type::s33];
-		const double s12 = (*this)[type::s12];
-		const double s13 = (*this)[type::s13];
-		const double s23 = (*this)[type::s23];
+		const double s11 = (*this)[Type::s11];
+		const double s22 = (*this)[Type::s22];
+		const double s33 = (*this)[Type::s33];
+		const double s12 = (*this)[Type::s12];
+		const double s13 = (*this)[Type::s13];
+		const double s23 = (*this)[Type::s23];
 		//I3 hessian
 		ddIc[6 * 3 + 3] = -2 * s33;
 		ddIc[6 * 4 + 4] = -2 * s22;
@@ -239,12 +239,12 @@ namespace materials
 	{
 		//data
 		double dJc[6];
-		const double s11 = (*this)[type::s11];
-		const double s22 = (*this)[type::s22];
-		const double s33 = (*this)[type::s33];
-		const double s12 = (*this)[type::s12];
-		const double s13 = (*this)[type::s13];
-		const double s23 = (*this)[type::s23];
+		const double s11 = (*this)[Type::s11];
+		const double s22 = (*this)[Type::s22];
+		const double s33 = (*this)[Type::s33];
+		const double s12 = (*this)[Type::s12];
+		const double s13 = (*this)[Type::s13];
+		const double s23 = (*this)[Type::s23];
 		//J2 gradient
 		dJc[3] = 2 * s12;
 		dJc[4] = 2 * s13;
@@ -259,12 +259,12 @@ namespace materials
 	{
 		//data
 		double dJc[6];
-		const double s11 = (*this)[type::s11];
-		const double s22 = (*this)[type::s22];
-		const double s33 = (*this)[type::s33];
-		const double s12 = (*this)[type::s12];
-		const double s13 = (*this)[type::s13];
-		const double s23 = (*this)[type::s23];
+		const double s11 = (*this)[Type::s11];
+		const double s22 = (*this)[Type::s22];
+		const double s33 = (*this)[Type::s33];
+		const double s12 = (*this)[Type::s12];
+		const double s13 = (*this)[Type::s13];
+		const double s23 = (*this)[Type::s23];
 		//J3 gradient
 		dJc[3] = 2 * s12 * (s11 + s22 - 2 * s33) / 3 + 2 * s13 * s23;
 		dJc[4] = 2 * s13 * (s11 + s33 - 2 * s22) / 3 + 2 * s12 * s23;
@@ -294,12 +294,12 @@ namespace materials
 	{
 		//data
 		double ddJc[36];
-		const double s11 = (*this)[type::s11];
-		const double s22 = (*this)[type::s22];
-		const double s33 = (*this)[type::s33];
-		const double s12 = (*this)[type::s12];
-		const double s13 = (*this)[type::s13];
-		const double s23 = (*this)[type::s23];
+		const double s11 = (*this)[Type::s11];
+		const double s22 = (*this)[Type::s22];
+		const double s33 = (*this)[Type::s33];
+		const double s12 = (*this)[Type::s12];
+		const double s13 = (*this)[Type::s13];
+		const double s23 = (*this)[Type::s23];
 		//J3 hessian
 		ddJc[6 * 4 + 3] = ddJc[6 * 3 + 4] = -2 * s23;
 		ddJc[6 * 5 + 3] = ddJc[6 * 3 + 5] = -2 * s13;
@@ -336,12 +336,12 @@ namespace materials
 		//data
 		double ddsc[36];
 		const double se = von_mises_stress();
-		const double s11 = (*this)[type::s11];
-		const double s22 = (*this)[type::s22];
-		const double s33 = (*this)[type::s33];
-		const double s12 = (*this)[type::s12];
-		const double s13 = (*this)[type::s13];
-		const double s23 = (*this)[type::s23];
+		const double s11 = (*this)[Type::s11];
+		const double s22 = (*this)[Type::s22];
+		const double s33 = (*this)[Type::s33];
+		const double s12 = (*this)[Type::s12];
+		const double s13 = (*this)[Type::s13];
+		const double s23 = (*this)[Type::s23];
 		//von mises hessian
 		ddsc[6 * 4 + 3] = ddsc[6 * 3 + 4] = -12 * s12 * s13;
 		ddsc[6 * 5 + 3] = ddsc[6 * 3 + 5] = -12 * s12 * s23;
@@ -372,12 +372,12 @@ namespace materials
 		//data
 		double dsc[6];
 		const double se = von_mises_stress();
-		const double s11 = (*this)[type::s11];
-		const double s22 = (*this)[type::s22];
-		const double s33 = (*this)[type::s33];
-		const double s12 = (*this)[type::s12];
-		const double s13 = (*this)[type::s13];
-		const double s23 = (*this)[type::s23];
+		const double s11 = (*this)[Type::s11];
+		const double s22 = (*this)[Type::s22];
+		const double s33 = (*this)[Type::s33];
+		const double s12 = (*this)[Type::s12];
+		const double s13 = (*this)[Type::s13];
+		const double s23 = (*this)[Type::s23];
 		//von misses gradient
 		dsc[3] = se != 0 ? 3 * s12 / se : 1;
 		dsc[4] = se != 0 ? 3 * s13 / se : 1;

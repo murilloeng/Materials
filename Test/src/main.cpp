@@ -11,9 +11,9 @@ int main(void)
 	//data
 	const bool steel = false;
 	const bool stress = false;
-	const bool concrete = false;
-	const bool uniaxial = true;
-	const uint32_t st = uint32_t(materials::Stress::type::s11);
+	const bool concrete = true;
+	const bool uniaxial = false;
+	const uint32_t st = 1 << uint32_t(materials::Stress::Type::s11);
 	const materials::Concrete::Model model = materials::Concrete::Model::bresler_pister;
 	//test
 	if(stress)
