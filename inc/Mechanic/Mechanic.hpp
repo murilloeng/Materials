@@ -42,6 +42,11 @@ namespace materials
 		virtual double elastic_modulus(void) const = 0;
 		virtual double thermal_coefficient(void) const = 0;
 
+		//return mapping
+		virtual void stress(double*, const double*, const Point&) const = 0;
+		virtual void stiffness(double*, const double*, const Point&) const = 0;
+		virtual void return_mapping(double*, double*, const double*, Point&) const = 0;
+
 	protected:
 		//data
 		double m_break_strain;

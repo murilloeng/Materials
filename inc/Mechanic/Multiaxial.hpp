@@ -27,9 +27,9 @@ namespace materials
 		virtual void yield_gradient(double*, const double*, uint32_t) const = 0;
 
 		//return mapping
-		void stress(double*, const double*, const Point&) const;
-		void stiffness(double*, const double*, const Point&) const;
-		void return_mapping(double*, double*, const double*, Point&) const;
+		void stress(double*, const double*, const Point&) const override;
+		void stiffness(double*, const double*, const Point&) const override;
+		void return_mapping(double*, double*, const double*, Point&) const override;
 
 		//test
 		void test_plastic_gradient(void) const;

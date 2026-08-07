@@ -143,6 +143,19 @@ namespace materials
 			return_mapping_corrector(s, C, e, sr, point);
 	}
 
+	void Uniaxial::stress(double* s, const double* e, const Point& point) const
+	{
+		stress(s[0], e[0], point);
+	}
+	void Uniaxial::stiffness(double* C, const double* e, const Point& point) const
+	{
+		stiffness(C[0], e[0], point);
+	}
+	void Uniaxial::return_mapping(double* s, double* C, const double* e, Point& point) const
+	{
+		return_mapping(s[0], C[0], e[0], 0, point);
+	}
+
 	//return mapping
 	bool Uniaxial::return_mapping_elastic(double& s, double& C, double e, double sr, Point& point) const
 	{

@@ -56,6 +56,10 @@ namespace materials
 		void stiffness(double&, double, const Point&) const;
 		bool return_mapping(double&, double&, double, double, Point&) const;
 
+		void stress(double*, const double*, const Point&) const override;
+		void stiffness(double*, const double*, const Point&) const override;
+		void return_mapping(double*, double*, const double*, Point&) const override;
+
 	protected:
 		//return mapping
 		bool return_mapping_elastic(double&, double&, double, double, Point&) const;
