@@ -15,7 +15,7 @@ void tests::concrete::tension(materials::Concrete::Model model)
 	materials::Mechanic::hardening(true);
 	const double E = concrete.elastic_modulus();
 	const double st = concrete.yield_stress_tension();
-	point.prepare(uint32_t(materials::Stress::Type::s11));
+	point.setup(uint32_t(materials::Stress::Type::s11));
 	//stream
 	FILE* stream = popen("gnuplot -p", "w");
 	fprintf(stream, "set grid; plot '-' with lines linecolor rgb '#0000ff' notitle\n");
@@ -40,7 +40,7 @@ void tests::concrete::biaxial(materials::Concrete::Model model)
 	materials::Mechanic::hardening(true);
 	const double E = concrete.elastic_modulus();
 	const double sb = concrete.yield_stress_biaxial();
-	point.prepare(uint32_t(materials::Stress::Type::s11) | uint32_t(materials::Stress::Type::s22));
+	point.setup(uint32_t(materials::Stress::Type::s11) | uint32_t(materials::Stress::Type::s22));
 	//stream
 	FILE* stream = popen("gnuplot -p", "w");
 	fprintf(stream, "set grid; plot '-' with lines linecolor rgb '#0000ff' notitle\n");
@@ -66,7 +66,7 @@ void tests::concrete::compression(materials::Concrete::Model model)
 	materials::Mechanic::hardening(true);
 	const double E = concrete.elastic_modulus();
 	const double sc = concrete.yield_stress_compression();
-	point.prepare(uint32_t(materials::Stress::Type::s11));
+	point.setup(uint32_t(materials::Stress::Type::s11));
 	//stream
 	FILE* stream = popen("gnuplot -p", "w");
 	fprintf(stream, "set grid; plot '-' with lines linecolor rgb '#0000ff' notitle\n");

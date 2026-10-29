@@ -21,10 +21,9 @@ namespace materials
 
 		//analysis
 		void reset(void);
-		void prepare(uint32_t);
-
 		void update(void);
 		void restore(void);
+		void setup(uint32_t);
 
 		//data
 		state m_state_old;

@@ -38,7 +38,7 @@ void tests::uniaxial::tension(void)
 	math::validation::Validator validator;
 	const uint32_t st = 1 << uint32_t(materials::Stress::Type::s11);
 	//return mapping
-	point.prepare(st);
+	point.setup(st);
 	material.inelastic(true);
 	material.yield_stress(sy);
 	material.elastic_modulus(E);
@@ -66,7 +66,7 @@ void tests::uniaxial::compression(void)
 	math::validation::Validator validator;
 	const uint32_t st = 1 << uint32_t(materials::Stress::Type::s11);
 	//return mapping
-	point.prepare(st);
+	point.setup(st);
 	material.inelastic(true);
 	material.yield_stress(sy);
 	material.elastic_modulus(E);

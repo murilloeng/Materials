@@ -16,7 +16,7 @@ void tests::steel::uniaxial(void)
 	const double sy = 4.00e+08;
 	const double Kp = 0.00e+00;
 	materials::Mechanic::hardening(true);
-	point.prepare(1 << uint32_t(materials::Stress::Type::s11));
+	point.setup(1 << uint32_t(materials::Stress::Type::s11));
 	//stream
 	FILE* stream = popen("gnuplot -p", "w");
 	fprintf(stream, "set grid; plot '-' with lines linecolor rgb '#0000ff' notitle\n");

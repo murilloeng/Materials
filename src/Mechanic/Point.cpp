@@ -37,7 +37,19 @@ namespace materials
 		memset(m_plastic_strain_old, 0, ns * sizeof(double));
 		memset(m_plastic_strain_new, 0, ns * sizeof(double));
 	}
-	void Point::prepare(uint32_t stress_types)
+	void Point::update(void)
+	{
+		m_state_old = m_state_new;
+		m_hardening_old = m_hardening_new;
+		memcpy(m_plastic_strain_old, m_plastic_strain_new, math::bit_count(m_stress_types) * sizeof (double));
+	}
+	void Point::restore(void)
+	{
+		m_state_new = m_state_old;
+		m_hardening_new = m_hardening_old;
+		memcpy(m_plastic_strain_new, m_plastic_strain_old, math::bit_count(m_stress_types) * sizeof (double));
+	}
+	void Point::setup(uint32_t stress_types)
 	{
 		//sizes
 		m_stress_types = stress_types;
@@ -53,18 +65,5 @@ namespace materials
 		m_plastic_strain_new = new double[ns];
 		memset(m_plastic_strain_old, 0, ns * sizeof(double));
 		memset(m_plastic_strain_new, 0, ns * sizeof(double));
-	}
-
-	void Point::update(void)
-	{
-		m_state_old = m_state_new;
-		m_hardening_old = m_hardening_new;
-		memcpy(m_plastic_strain_old, m_plastic_strain_new, math::bit_count(m_stress_types) * sizeof (double));
-	}
-	void Point::restore(void)
-	{
-		m_state_new = m_state_old;
-		m_hardening_new = m_hardening_old;
-		memcpy(m_plastic_strain_new, m_plastic_strain_old, math::bit_count(m_stress_types) * sizeof (double));
 	}
 }
